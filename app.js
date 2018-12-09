@@ -30,7 +30,7 @@ con.connect((err) => { if (err) throw err //going to need to set up an e-mail no
 })
 
 // Ports
-server.listen(4040)
+server.listen(8080)
 
 // Router  ---- rien ci ne marche XD
 app.get('/', (req,res) => {
