@@ -1,0 +1,28 @@
+{
+  "name": "moonrise",
+  "version": "1.0.0",
+  "description": "re-make of Moonrise Agency's website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echouvet/Moonrise.git"
+  },
+  "author": "echouvet, dadacruz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/echouvet/Moonrise/issues"
+  },
+  "homepage": "https://github.com/echouvet/Moonrise#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-vue": "^5.8.2",
+    "http": "0.0.0",
+    "mysql": "^2.16.0",
+    "path": "^0.12.7",
+    "vue": "^2.5.18"
+  },
+  "devDependencies": {}
+}
