@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section>
     <front-page/>
     <app-form/>
   </section>
