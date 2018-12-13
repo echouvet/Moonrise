@@ -2,9 +2,10 @@
 <template>
  <form @submit.prevent="postForm()" enctype="multipart/form-data" class="w-full container mx-auto">
 	<h2 class="text-grey-dark">Modify Artists</h2>
-	<div class="float-right">
-		<select v-model="selected">
-			<option v-for="(artist, index) in artists" :key="artist.id" >{{artist.id}} {{ artist.name}}</option>
+	<div class="w-full my-4">
+		<select v-model="selected" class="w-full md:w-1/3 h-12 block bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+			<option value="0">Choose artist</option>
+			<option v-for="artist in artists" :key="artist.id" :value="artist.id">{{artist.id}} {{ artist.name}}</option>
 		</select>
 	</div>
 	<hr class="border border-grey-lighter">
@@ -45,16 +46,28 @@
 		</div>
     <div class="flex flex-wrap -mx-3 mb-6">
 		<div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-		<label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
-			Image 1
-		</label>
-		<input type="file" v-on:change="handleimg1()"  ref="img1" name="img1" accept="image/*"> 
+			<div class="overflow-hidden relative w-64 mt-4 mb-4">
+                <button class="bg-indigo hover:bg-indigo-dark text-white font-bold py-2 px-4 w-full inline-flex items-center">
+                    <svg fill="#FFF" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                    </svg>
+                    <span class="ml-2">Image 1</span>
+                </button>
+                <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" v-on:change="handleimg1()"  ref="img1" name="img1" accept="image/*">
+            </div>
 		</div>
 		<div class="w-full md:w-1/2 px-3">
-		<label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
-			Image 2
-		</label>
-		<input type="file" v-on:change="handleimg2()"  ref="img2" name="img2" accept="image/*"> <br /> 
+		<div class="overflow-hidden relative w-64 mt-4 mb-4">
+                <button class="bg-indigo hover:bg-indigo-dark text-white font-bold py-2 px-4 w-full inline-flex items-center">
+                    <svg fill="#FFF" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                    </svg>
+                    <span class="ml-2">Image 2</span>
+                </button>
+                <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" v-on:change="handleimg2()"  ref="img2" name="img2" accept="image/*">
+            </div>
 		</div>
 		<div class="mt-6 w-full">
 			<button class="bg-blue text-white py-2 px-4 font-semibold  float-left" @click="butn('new')" type="submit">Create new artist</button>
@@ -72,25 +85,22 @@
 <script>
 import MultipleInput from './MultipleInput.vue'
 
-
-
-	export default {
+  export default {
 		components: {
 			MultipleInput
 		},
 		data () {
 			return {
 				artists: [],
-				name: "",
-				description : "",
-				location : "",
-				territory: "",
+				name: '',
+				description : '',
+				location : '',
+				territory: '',
 				links: [],
 				img1: '', 
 				img2: '',
-				selected: '',
+				selected: 0,
 				button: '',
-				merde: null
 			}
 		},
 		mounted() {
@@ -112,8 +122,8 @@ import MultipleInput from './MultipleInput.vue'
 				else if (this.button == 'del')
 				{
 					const formData = new FormData();
-					formData.append("id", this.selected.replace(/\D/g,''))
-					console.log(this.selected.replace(/\D/g,''))
+					formData.append("id", this.selected)
+					console.log(this.selected)
 					this.postrequest("http://localhost:4000/artist/delete", formData)
 				}
 				
@@ -140,7 +150,7 @@ import MultipleInput from './MultipleInput.vue'
 			},
 			appendall(){
 				const formData = new FormData();
-				formData.append("id", this.selected.replace(/\D/g,''))
+				formData.append("id", this.selected)
 				formData.append("name", this.name);
 				formData.append("description", this.description);
 				formData.append("location", this.location);
