@@ -7,6 +7,12 @@ description TEXT, \
 location VARCHAR(255), \
 territory VARCHAR(255), \
 img1 VARCHAR(255), \
-img2 VARCHAR(255), \
-links VARCHAR(255))`;
+img2 VARCHAR(255) )`;
 con.query(artists, (err) => { if (err) throw err;}) 
+
+var links = `CREATE TABLE IF NOT EXISTS links ( \
+id INT AUTO_INCREMENT PRIMARY KEY, \
+artist_id INT, \
+link TEXT, \
+placeholder VARCHAR(255))`;
+con.query(links, (err) => { if (err) throw err;}) 

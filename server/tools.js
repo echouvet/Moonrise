@@ -1,4 +1,5 @@
 const  mailer = require("nodemailer")
+const	eschtml = require("escape-html")
 //https://nodemailer.com/about/
 module.exports = {
 	error: (msg) => {
