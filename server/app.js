@@ -46,13 +46,27 @@ app.use((req, res, next) =>{
 })
 .get('/artists', (req,res) => {
 	con.query("SELECT * FROM artists", (err, response) => { if (err) tools.error(err);
+		var data = response.forEach(el => {
+			con.query("SELECT * FROM links WHERE artist_id = ?", [el.id], 
+    			(err, links) => { if (err) tools.error(err);
+    			else 
+					el.links = links
+			}) 
+		})
 		res.json(JSON.stringify(response)) // la liste de tout les artists a t'envoyer
 	})
 })
 .get('/artist/:data', (req,res) => {
 	var artist = eschtml(req.params.data)
     con.query("SELECT * FROM artists WHERE name = ?", [artist], (err, response) => { if (err) tools.error(err);
-    	res.json(response[0]) // toutes les infos l'artist demander
+    	con.query("SELECT * FROM links WHERE artist_id = ?", [response[0].id], 
+    		(err, links) => { if (err) tools.error(err);
+			else
+			{
+				response[0].links = links
+				res.json(response[0])
+			}
+    	})
 	})
 })
 .get('/error/:data', (req,res)  => {

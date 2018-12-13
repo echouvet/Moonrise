@@ -4,7 +4,7 @@
 	<h2 class="text-grey-dark">Modify Artists</h2>
 	<div class="float-right">
 		<select v-model="selected">
-			<option v-for="(artist, index) in artists" :key="artist.id" >{{ index === 0 ? 'Choose' : artist.name}}</option>
+			<option v-for="(artist, index) in artists" :key="artist.id" >{{artist.id}} {{ artist.name}}</option>
 		</select>
 	</div>
 	<hr class="border border-grey-lighter">
@@ -102,22 +102,18 @@ import MultipleInput from './MultipleInput.vue'
 			postForm() {
 				const formData = new FormData();
 				if (this.button == 'new') {
-					formData.append("name", this.name);
-					formData.append("description", this.description);
-					formData.append("location", this.location);
-					formData.append("territory", this.territory);
-					formData.append("links", this.links);
-					formData.append('img1', this.img1);
-					formData.append('img2', this.img2);
+					const formData = this.appendall()
 					this.postrequest("http://localhost:4000/artist/create", formData)
 				}
-				else if (this.button == 'update')
-				{
-					formData.append("name", this.selected)
+				else if (this.button == 'update') {
+					const formData = this.appendall()
+					this.postrequest("http://localhost:4000/artist/update", formData)
 				}
 				else if (this.button == 'del')
 				{
-					formData.append("name", this.selected)
+					const formData = new FormData();
+					formData.append("id", this.selected.replace(/\D/g,''))
+					console.log(this.selected.replace(/\D/g,''))
 					this.postrequest("http://localhost:4000/artist/delete", formData)
 				}
 				
@@ -133,7 +129,6 @@ import MultipleInput from './MultipleInput.vue'
   			},
   			postrequest(url, data) {
 				this.$http.post(url, data).then(response => {
-					console.log(data)
 					if (response.data)
 					{
 						if (response.data.error)
@@ -142,7 +137,19 @@ import MultipleInput from './MultipleInput.vue'
 							console.log("Success : " + response.data.success); //faire ceci dans une div verte ;P
 					}
 				}).catch(error => console.error(error)); //ceci on y touche pas xD
-			}, 
+			},
+			appendall(){
+				const formData = new FormData();
+				formData.append("id", this.selected.replace(/\D/g,''))
+				formData.append("name", this.name);
+				formData.append("description", this.description);
+				formData.append("location", this.location);
+				formData.append("territory", this.territory);
+				formData.append("links", this.links);
+				formData.append('img1', this.img1);
+				formData.append('img2', this.img2);
+				return (formData)
+			},
 			butn(button){
 				this.button = button
 			}

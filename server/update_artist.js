@@ -1,7 +1,72 @@
-function updateuser(column, change) {
-
-    var sql = 'UPDATE users SET ' + column + ' = ? WHERE id = ?'
-    con.query(sql, [change, req.session.profile.id], function (err) { if (err) res.redirect('/error/SQL error ' + err); })
-    req.session.profile[column] = change;
-    update = 1;
+function update(column, change, id) {
+    if ((column == 'name' || column == 'location' || column == 'territory') && change.length > 250)
+        res.json({error : "Name, Location, or Territory can not be over 250 characters :(" })
+    else {
+        var sql = 'UPDATE artists SET ' + column + ' = ? WHERE id = ?'
+        con.query(sql, [change, id], function (err) { if (err) tools.error(err); })
+        binary = 1;
+    }
 }
+
+function updateimg(name, image, id) {
+    if (image.size > 50000000)
+        res.json({error : "First image is too big"})
+    else
+    {
+        var path =  __dirname.replace("/server", "") +'/client/assets/img/'+id+'/'+name;
+        fs.unlinkSync(path);
+        fs.readFile(image.path, (err, data) => { if (err) tools.error(err);
+            fs.writeFile(path, data, (err) => { if (err) tools.error(err); })
+        })
+        con.query('UPDATE artists SET img1 = ?, WHERE id = ?', [path, id], 
+            (err) => {if (err) tools.error(err); })
+        binary = 1;
+    }
+}
+
+var binary = 0;
+var form = new formidable.IncomingForm();
+form.parse(req, (err, field, files) => { if (err) tools.error(err);
+    console.log(field)
+    if (empty(field.id)) {res.json({error : "No Artist Selected"});}
+    else{
+        var id = eschtml(field.id)
+        name = eschtml(field.name)
+        description = eschtml(field.description)
+        location = eschtml(field.location)
+        territory = eschtml(field.territory)
+        if (!empty(files.img1))
+            updateimg('img1', files.img1, id)
+        if (!empty(files.img2))
+            updateimg('img2', files.img2, id)
+        if (!empty(name))
+            update('name', name, id)
+        if (!empty(description))
+        {
+            if (description.length > 65500)
+                res.json({error : "Your Description is over 65,500 CHARACTERSSSSS wtf Nico xD message Eloi if you really want this" })
+            else
+                update('description', description, id)
+        }
+        if (!empty(location))
+            update('location', location, id)
+        if (!empty(territory))
+            update('territory', territory, id)
+        if (!empty(field.links))
+        {
+            var links = JSON.parse(field.links)
+            links.forEach((el) => {
+                var linkid = eschtml(link.id)
+                var artistid = eschtml(link.artist_id)
+                var link_name = eschtml(el.link_name)
+                var link = eschtml(el.link)
+                con.query('UPDATE `links` SET (`link`, `placeholder`) VALUES (?, ?) WHERE id = ? AND artist_id = ?', 
+                    [link_name, link, linkid, artistid], (err) => { if (err) tools.error(err); })
+            })
+        }
+        if (binary = 1)
+            res.json({Success: 'Artist Successfully Updated'})
+        else
+            res.json({error: 'Nothing Was Updated'})
+    }
+})

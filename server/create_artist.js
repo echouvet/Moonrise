@@ -1,5 +1,4 @@
 var form = new formidable.IncomingForm();
-
 form.parse(req, (err, field, files) => { if (err) tools.error(err);
 	else {
 		// Security
