@@ -26,7 +26,7 @@
 <script>
   export default {
 	data: function () {
-    	return { values: [[""]] };
+    	return { values: [{}] };
   },
   methods: {
     updateValue: function() {

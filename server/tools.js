@@ -5,6 +5,7 @@ module.exports = {
 	error: (msg) => {
 		var message = eschtml(msg)
 		console.log(message)
+		return ;
 		mailer.createTestAccount((err, account) => {
 		let transporter = mailer.createTransport("SMTP", {
 		        auth: {

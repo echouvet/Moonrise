@@ -28,33 +28,25 @@ con.connect((err) => { if (err) tools.error(err)
 
 // Ports
 server.listen(4000)
-
-app.post('/artist/delete/:id', (req,res) => {
-	if (isNaN(req.params.id))
-		res.json({error : "id is not a number"})
-	else {
-		id = eschtml(req.params.id)
-		con.query("SELECT (img1, img2) FROM artists WHERE id = ?", [id], (err, rows) => { if (err) tools.error(err); 
-			if (rows.length == 0)
-				res.json({error : "Artist doesn't exist"})
-			else
-			{
-				fs.unlinkSync(img1);
-				fs.unlinkSync(img2);
-				con.query("DELETE FROM artists WHERE id = ?", [id], (err) => { if (err) tools.error(err);
-				else
-					res.json({success: "Artist Successfully Deleted"});
-				})
-			}
-		})
-	}
+app.use((req, res, next) =>{
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+	next();
+})
+.post('/artist/delete', (req,res) => {
+	eval(fs.readFileSync(__dirname + "/delete_artist.js")+'')
 })
 .post('/artist/create', (req,res) => {
-	eval(fs.readFileSync(__dirname + "/server/create_artist.js")+'') //ben va voir le code, je cree un artiste en gros. A revoir la gestion des links
+	eval(fs.readFileSync(__dirname + "/create_artist.js")+'')
+})
+.post('/artist/update', (req,res) => {
+	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
 })
 .get('/artists', (req,res) => {
-	con.query("SELECT (id, name, img1) FROM artists", (err, response) => { if (err) tools.error(err);
-		res.json(artists) // la liste de tout les artists a t'envoyer
+	con.query("SELECT * FROM artists", (err, response) => { if (err) tools.error(err);
+		res.json(JSON.stringify(response)) // la liste de tout les artists a t'envoyer
 	})
 })
 .get('/artist/:data', (req,res) => {
