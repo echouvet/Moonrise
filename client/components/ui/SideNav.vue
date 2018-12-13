@@ -1,5 +1,5 @@
 <template>
-      <div class="hidden lg:block lg:w-1/6 h-full">
+      <section id="side-navigation" class="hidden lg:block lg:w-1/6 h-full">
             <div class="px-2 w-full">
                 <img class="w-full" src="../../assets/img/moon-full-rise.png" alt="moon-full-rise">
                 <div class="text-center">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 </template>
 
 <script>
