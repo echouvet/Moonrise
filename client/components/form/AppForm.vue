@@ -3,9 +3,9 @@
  <form @submit.prevent="postForm()" enctype="multipart/form-data" class="w-full container mx-auto">
 	<h2 class="text-grey-dark">Modify Artists</h2>
 	<div class="w-full my-4">
-		<select v-model="selected" class="w-full md:w-1/3 h-12 block bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
-			<option value="0">Choose artist</option>
-			<option v-for="artist in artists" :key="artist.id" :value="artist.id">{{artist.id}} {{ artist.name}}</option>
+		<select v-model="current_artist" class="w-full md:w-1/3 h-12 block bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+			<option value="0">Select Artist</option>
+			<option v-for="artist in artists" :key="artist.id" :value="artist">{{ artist.name}}</option>
 		</select>
 	</div>
 	<hr class="border border-grey-lighter">
@@ -14,13 +14,13 @@
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
         Artist Name
       </label>
-      <input v-model="name" placeholder="Artist Full Name" name="name" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text">
+      <input v-model="current_artist.name" placeholder="Artist Full Name" name="name" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text">
     </div>
     <div class="w-full md:w-1/2 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
         Location
       </label>
-      <input v-model="location" placeholder="Location" name="Location" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey">
+      <input v-model="current_artist.location" placeholder="Location" name="Location" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey">
     </div>
   </div>
   <div class="flex flex-wrap -mx-3 mb-6">
@@ -28,7 +28,7 @@
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
         Territory
       </label>
-      <input v-model="territory" placeholder="Territory" name="Territory" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text">
+      <input v-model="current_artist.territory" placeholder="Territory" name="Territory" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text">
     </div>
   </div>
   <div class="flex flex-wrap -mx-3 mb-6">
@@ -36,7 +36,7 @@
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-password">
         Description
       </label>
-      <textarea v-model="description" placeholder="Description" name="Description" rows="4" cols="50" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"></textarea>
+      <textarea v-model="current_artist.description" placeholder="Description" name="Description" rows="4" cols="50" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-grey"></textarea>
 	</div>
   </div>
 		<div class="flex flex-wrap -mx-3 mb-6">
@@ -55,6 +55,7 @@
                     <span class="ml-2">Image 1</span>
                 </button>
                 <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" v-on:change="handleimg1()"  ref="img1" name="img1" accept="image/*">
+                <!-- <img :src="'../..' + current_artist.img1" style="width: 500px"/> -->
             </div>
 		</div>
 		<div class="w-full md:w-1/2 px-3">
@@ -67,6 +68,7 @@
                     <span class="ml-2">Image 2</span>
                 </button>
                 <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" v-on:change="handleimg2()"  ref="img2" name="img2" accept="image/*">
+                <!-- <img :src="current_artist.img1" style="width: 500px"/> -->
             </div>
 		</div>
 		<div class="mt-6 w-full">
@@ -92,14 +94,8 @@ import MultipleInput from './MultipleInput.vue'
 		data () {
 			return {
 				artists: [],
-				name: '',
-				description : '',
-				location : '',
-				territory: '',
+				current_artist: {},
 				links: [],
-				img1: '', 
-				img2: '',
-				selected: 0,
 				button: '',
 			}
 		},
@@ -109,6 +105,13 @@ import MultipleInput from './MultipleInput.vue'
 			}).catch(err => { console.log(err) })
 		},
 		methods: {
+			setartist(id) {
+				this.current_artist.id = id
+				this.artists.forEach(el => {
+					if (el.id = this.current_artist.id)
+						this.current_artist = el;
+				})
+			},
 			postForm() {
 				const formData = new FormData();
 				if (this.button == 'new') {
@@ -122,8 +125,8 @@ import MultipleInput from './MultipleInput.vue'
 				else if (this.button == 'del')
 				{
 					const formData = new FormData();
-					formData.append("id", this.selected)
-					console.log(this.selected)
+					formData.append("id", this.current_artist.id)
+					console.log(this.current_artist.id)
 					this.postrequest("http://localhost:4000/artist/delete", formData)
 				}
 				
@@ -132,10 +135,10 @@ import MultipleInput from './MultipleInput.vue'
 				this.links = JSON.stringify(linksdata)
 			},
 			handleimg1(){
-    			this.img1 = this.$refs.img1.files[0]
+    			this.current_artist.img1 = this.$refs.img1.files[0]
   			},
   			handleimg2(){
-    			this.img2 = this.$refs.img2.files[0]
+    			this.current_artist.img2 = this.$refs.img2.files[0]
   			},
   			postrequest(url, data) {
 				this.$http.post(url, data).then(response => {
@@ -150,14 +153,14 @@ import MultipleInput from './MultipleInput.vue'
 			},
 			appendall(){
 				const formData = new FormData();
-				formData.append("id", this.selected)
-				formData.append("name", this.name);
-				formData.append("description", this.description);
-				formData.append("location", this.location);
-				formData.append("territory", this.territory);
+				formData.append("id", this.current_artist.id)
+				formData.append("name", this.current_artist.name);
+				formData.append("description", this.current_artist.description);
+				formData.append("location", this.current_artist.location);
+				formData.append("territory", this.current_artist.territory);
 				formData.append("links", this.links);
-				formData.append('img1', this.img1);
-				formData.append('img2', this.img2);
+				formData.append('img1', this.current_artist.img1);
+				formData.append('img2', this.current_artist.img2);
 				return (formData)
 			},
 			butn(button){

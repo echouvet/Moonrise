@@ -45,15 +45,18 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 					con.query('INSERT INTO `links` (`artist_id`, `link`, `placeholder`) VALUES (?, ?, ?)', [result.insertId, link_name, link], 
 						(err) => { if (err) tools.error(err); })
 				})
-				var img1_path = dir + "/img1"
-				var img2_path = dir + "/img2"
+				var img1_path = dir + "/img1.jpg"
+				var img2_path = dir + "/img2.jpg"
 				 fs.readFile(files.img1.path, (err, data) => { if (err) tools.error(err);
 			    	fs.writeFile(img1_path, data, (err) => { if (err) tools.error(err); })
 				})
 				fs.readFile(files.img2.path, (err, data) => { if (err) tools.error(err);
 					fs.writeFile(img2_path, data, (err) => { if (err) tools.error(err); })
 				})
-				con.query('UPDATE artists SET img1 = ?, img2 = ? WHERE id = ?', [img1_path, img2_path, result.insertId], 
+				dir = "/assets/img/" + result.insertId
+				img1 = dir + "/img1.jpg"
+				img2 = dir + "/img2.jpg"
+				con.query('UPDATE artists SET img1 = ?, img2 = ? WHERE id = ?', [img1, img2, result.insertId], 
 					(err) => {if (err) tools.error(err); })
 			})
 		    res.json({success: "Artist was successfully created !"})

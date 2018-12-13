@@ -18,7 +18,8 @@ function updateimg(name, image, id) {
         fs.readFile(image.path, (err, data) => { if (err) tools.error(err);
             fs.writeFile(path, data, (err) => { if (err) tools.error(err); })
         })
-        con.query('UPDATE artists SET img1 = ?, WHERE id = ?', [path, id], 
+        dbpath = '/client/assets/img/'+id+'/'+name;
+        con.query('UPDATE artists SET img1 = ? WHERE id = ?', [dbpath, id], 
             (err) => {if (err) tools.error(err); })
         binary = 1;
     }
@@ -36,9 +37,9 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         location = eschtml(field.location)
         territory = eschtml(field.territory)
         if (!empty(files.img1))
-            updateimg('img1', files.img1, id)
+            updateimg('img1.jpg', files.img1, id)
         if (!empty(files.img2))
-            updateimg('img2', files.img2, id)
+            updateimg('img2.jpg', files.img2, id)
         if (!empty(name))
             update('name', name, id)
         if (!empty(description))
@@ -56,12 +57,15 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         {
             var links = JSON.parse(field.links)
             links.forEach((el) => {
-                var linkid = eschtml(link.id)
-                var artistid = eschtml(link.artist_id)
-                var link_name = eschtml(el.link_name)
-                var link = eschtml(el.link)
-                con.query('UPDATE `links` SET (`link`, `placeholder`) VALUES (?, ?) WHERE id = ? AND artist_id = ?', 
-                    [link_name, link, linkid, artistid], (err) => { if (err) tools.error(err); })
+                if (!empty(el))
+                {
+                     var link_name = eschtml(el.link_name)
+                    var link = eschtml(el.link)
+                    var linkid = eschtml(el.id)
+                    var artistid = eschtml(el.artist_id)
+                    con.query('UPDATE `links` SET (`link`, `placeholder`) VALUES (?, ?) WHERE id = ? AND artist_id = ?', 
+                        [link_name, link, linkid, artistid], (err) => { if (err) tools.error(err); })
+                }
             })
         }
         if (binary = 1)
