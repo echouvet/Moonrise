@@ -71,10 +71,10 @@
                 <!-- <img :src="current_artist.img1" style="width: 500px"/> -->
             </div>
 		</div>
-		<div class="mt-6 w-full">
-			<button class="bg-blue text-white py-2 px-4 font-semibold  float-left" @click="butn('new')" type="submit">Create new artist</button>
-			<button class="bg-orange text-white py-2 px-4 font-semibold float-none" @click="butn('update')" style="margin-left:120px;" type="submit">Update Artist</button>
-			<button class="bg-red text-white py-2 px-4 font-semibold  float-right" @click="butn('del')" type="submit">Delete Artist</button>
+		<div class="flex justify-between mt-6 w-full px-3">
+			<button class="bg-blue text-white py-2 px-4 font-semibold  " @click="butn('new')" type="submit">Create new artist</button>
+			<button class="bg-orange text-white py-2 px-4 font-semibold" @click="butn('update')"  type="submit">Update Artist</button>
+			<button class="bg-red text-white py-2 px-4 font-semibold" @click="butn('del')" type="submit">Delete Artist</button>
 		</div>
 		<div class="mt-6 w-full">
 		</div>
@@ -109,11 +109,11 @@ import MultipleInput from './MultipleInput.vue'
 				this.current_artist.id = id
 				this.artists.forEach(el => {
 					if (el.id = this.current_artist.id)
-						this.current_artist = el;
+						this.current_artist = el
 				})
 			},
 			postForm() {
-				const formData = new FormData();
+				const formData = new FormData()
 				if (this.button == 'new') {
 					const formData = this.appendall()
 					this.postrequest("http://localhost:4000/artist/create", formData)
@@ -124,7 +124,7 @@ import MultipleInput from './MultipleInput.vue'
 				}
 				else if (this.button == 'del')
 				{
-					const formData = new FormData();
+					const formData = new FormData()
 					formData.append("id", this.current_artist.id)
 					console.log(this.current_artist.id)
 					this.postrequest("http://localhost:4000/artist/delete", formData)
@@ -145,22 +145,22 @@ import MultipleInput from './MultipleInput.vue'
 					if (response.data)
 					{
 						if (response.data.error)
-							console.log("Error : " + response.data.error); //faire ceci dans une div rouge;P
+							console.log("Error : " + response.data.error) //faire ceci dans une div rougeP
 						else if (response.data.success)
-							console.log("Success : " + response.data.success); //faire ceci dans une div verte ;P
+							console.log("Success : " + response.data.success) //faire ceci dans une div verte P
 					}
-				}).catch(error => console.error(error)); //ceci on y touche pas xD
+				}).catch(error => console.error(error)) //ceci on y touche pas xD
 			},
 			appendall(){
-				const formData = new FormData();
+				const formData = new FormData()
 				formData.append("id", this.current_artist.id)
-				formData.append("name", this.current_artist.name);
-				formData.append("description", this.current_artist.description);
-				formData.append("location", this.current_artist.location);
-				formData.append("territory", this.current_artist.territory);
-				formData.append("links", this.links);
-				formData.append('img1', this.current_artist.img1);
-				formData.append('img2', this.current_artist.img2);
+				formData.append("name", this.current_artist.name)
+				formData.append("description", this.current_artist.description)
+				formData.append("location", this.current_artist.location)
+				formData.append("territory", this.current_artist.territory)
+				formData.append("links", this.links)
+				formData.append('img1', this.current_artist.img1)
+				formData.append('img2', this.current_artist.img2)
 				return (formData)
 			},
 			butn(button){
