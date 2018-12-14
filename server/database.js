@@ -16,3 +16,9 @@ artist_id INT, \
 link TEXT, \
 placeholder VARCHAR(255))`;
 con.query(links, (err) => {  if (err) tools.error(err);}) 
+
+var user = `CREATE TABLE IF NOT EXISTS user ( \
+id INT AUTO_INCREMENT PRIMARY KEY, \
+username VARCHAR(255), \
+password VARCHAR(255))`;
+con.query(user, (err) => {  if (err) tools.error(err);}) 
