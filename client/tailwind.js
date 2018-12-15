@@ -44,6 +44,7 @@ View the full documentation at https://tailwindcss.com.
 */
 
 let colors = {
+  'moonrise': '#1b1b1b',
   'transparent': 'transparent',
 
   'black': '#22292f',
@@ -867,7 +868,7 @@ module.exports = {
     backgroundRepeat: ['responsive'],
     backgroundSize: ['responsive'],
     borderCollapse: [],
-    borderColors: ['responsive', 'hover', 'focus'],
+    borderColors: ["responsive", "hover", "focus", "group-hover"],
     borderRadius: ['responsive'],
     borderStyle: ['responsive'],
     borderWidths: ['responsive'],
@@ -903,7 +904,7 @@ module.exports = {
     tracking: ['responsive'],
     userSelect: ['responsive'],
     verticalAlign: ['responsive'],
-    visibility: ['responsive'],
+    visibility: ["responsive", "group-hover"],
     whitespace: ['responsive'],
     width: ['responsive'],
     zIndex: ['responsive'],

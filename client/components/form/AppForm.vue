@@ -3,9 +3,9 @@
  <form @submit.prevent="postForm()" enctype="multipart/form-data" class="w-full container mx-auto">
 	<h2 class="text-grey-dark">Modify Artists</h2>
 	<div class="w-full my-4">
-		<select v-model="current_artist" class="w-full md:w-1/3 h-12 block bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+		<select v-model="edited" class="w-full md:w-1/3 h-12 block bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
 			<option value="0">Select Artist</option>
-			<option v-for="artist in artists" :key="artist.id" :value="artist">{{ artist.name}}</option>
+			<option v-for="artist in artists" :key="artist.id" :value="artist">{{ artist.name }}</option>
 		</select>
 	</div>
 	<hr class="border border-grey-lighter">
@@ -97,6 +97,7 @@ import MultipleInput from './MultipleInput.vue'
 				current_artist: {},
 				links: [],
 				button: '',
+				edited: 0
 			}
 		},
 		mounted() {

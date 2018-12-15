@@ -39,38 +39,38 @@ con.connect((err) => { if (err) tools.error(err)
 })
 
 // Ports
-server.listen(4000)
+//server.listen(4000)
 
 
 
 // con.query('USE `Moonrise`', (err) => {  if (err) tools.error(err);})
 
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/crazy-p.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/eli-escobar.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/fred-everything.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/hot-toddy.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/jkriv.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/kon.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/labeuz.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/lay-far.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/lovebirds.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/luke-solomon.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/martin-hayes.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Crazy P", "/__nuxt/assets/img/crazy-p.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Eli Escobar", "/__nuxt/assets/img/eli-escobar.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Fred Everything", "/__nuxt/assets/img/fred-everything.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Hot Toddy", "/__nuxt/assets/img/hot-toddy.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Jkriv", "/__nuxt/assets/img/jkriv.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Kon", "/__nuxt/assets/img/kon.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Labeuz", "/__nuxt/assets/img/labeuz.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Lay Far", "/__nuxt/assets/img/lay-far.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Lovebirds", "/__nuxt/assets/img/lovebirds.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Luke Solomon", "/__nuxt/assets/img/luke-solomon.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Martin Hayes", "/__nuxt/assets/img/martin-hayes.jpg")', (err) =>{ if (err) throw err; })
 // con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/moon-full-rise.png")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/moplen.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/qwestlife.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/rainer-trueby.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/razor-n-tape.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/ron-basejam.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/sleazy-beats-soundsystem.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/sleazy-mcqueen.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/__nuxt/assets/img/wolf-music.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Moplen", "/__nuxt/assets/img/moplen.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Qwestlife", "/__nuxt/assets/img/qwestlife.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Rainer trueby", "/__nuxt/assets/img/rainer-trueby.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Razor-N-Tape", "/__nuxt/assets/img/razor-n-tape.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Ron Basejam", "/__nuxt/assets/img/ron-basejam.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Sleazy Beats Soundsystem", "/__nuxt/assets/img/sleazy-beats-soundsystem.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Sleazy McQueen", "/__nuxt/assets/img/sleazy-mcqueen.jpg")', (err) =>{ if (err) throw err; })
+// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Wolf Music", "/__nuxt/assets/img/wolf-music.jpg")', (err) =>{ if (err) throw err; })
 
 
 // Ports
 server.listen(4000)
 app.use((req, res, next) =>{
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -86,8 +86,10 @@ app.use((req, res, next) =>{
 			// 		el.links = links
 			// }) 
 		// })
-		data = tools.shuffle(response)
-		console.log(data)
+	//	data = tools.shuffle(response)
+
+		data = response
+	//	console.log(data)
 		res.json(JSON.stringify(data)) // la liste de tout les artists a t'envoyer
 	})
 })
