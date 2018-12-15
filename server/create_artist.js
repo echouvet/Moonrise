@@ -6,7 +6,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 	    description = eschtml(field.description)
 	    location = eschtml(field.location)
 	    territory = eschtml(field.territory)
-		// Errors
+		//Errors
 		if (empty(files.img1))
 			res.json({error : "Missing First Image"})
 		else if (files.img1.size > 50000000)
@@ -34,7 +34,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 		    var sql = 'INSERT INTO `artists` (`name`, `description`, `location`, `territory`) VALUES (?, ?, ?, ?)';
 		    con.query(sql, [name, description, location, territory], 
 		    	(err, result) => { if (err) tools.error(err); 
-				var dir =  __dirname.replace("/server", "") + '/client/assets/img/' + result.insertId
+				var dir =  __dirname.replace("/server", "") + '/client/static/img/' + result.insertId
 				if (!fs.existsSync(dir)){
 	           		fs.mkdirSync(dir);
 	        	}
@@ -45,21 +45,21 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 					con.query('INSERT INTO `links` (`artist_id`, `link`, `placeholder`) VALUES (?, ?, ?)', [result.insertId, link_name, link], 
 						(err) => { if (err) tools.error(err); })
 				})
-				var img1_path = dir + "/img1.jpg"
-				var img2_path = dir + "/img2.jpg"
+				var img1_path = dir + '/' + files.img1.name
+				var img2_path = dir + '/' + files.img2.name
 				 fs.readFile(files.img1.path, (err, data) => { if (err) tools.error(err);
 			    	fs.writeFile(img1_path, data, (err) => { if (err) tools.error(err); })
 				})
 				fs.readFile(files.img2.path, (err, data) => { if (err) tools.error(err);
 					fs.writeFile(img2_path, data, (err) => { if (err) tools.error(err); })
 				})
-				dir = "/assets/img/" + result.insertId
-				img1 = dir + "/img1.jpg"
-				img2 = dir + "/img2.jpg"
+				var staticdir = "/img/" + result.insertId
+				img1 = staticdir + '/' + files.img1.name
+				img2 = staticdir + '/' + files.img2.name
 				con.query('UPDATE artists SET img1 = ?, img2 = ? WHERE id = ?', [img1, img2, result.insertId], 
 					(err) => {if (err) tools.error(err); })
 			})
 		    res.json({success: "Artist was successfully created !"})
-		}
+		 }
 	}
 })

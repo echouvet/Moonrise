@@ -8,18 +8,23 @@ function update(column, change, id) {
     }
 }
 
-function updateimg(name, image, id) {
+function updateimg(column, image, id) {
     if (image.size > 50000000)
         res.json({error : "First image is too big"})
     else
     {
-        var path =  __dirname.replace("/server", "") +'/client/assets/img/'+id+'/'+name;
-        fs.unlinkSync(path);
+        con.query('SELECT '+ column +' FROM artists WHERE id = ?', [id], (err, img) => {
+             var oldpath = __dirname.replace("/server", "") +'/client/static' + img[0][column]
+             if (!fs.existsSync(oldpath)){
+                fs.unlinkSync(oldpath);
+             }
+        })
+        var path =  __dirname.replace("/server", "") +'/client/static/img/'+id+'/'+image.name; 
         fs.readFile(image.path, (err, data) => { if (err) tools.error(err);
             fs.writeFile(path, data, (err) => { if (err) tools.error(err); })
         })
-        dbpath = '/client/assets/img/'+id+'/'+name;
-        con.query('UPDATE artists SET img1 = ? WHERE id = ?', [dbpath, id], 
+        var dbpath = '/img/'+id+'/'+image.name;
+        con.query('UPDATE artists SET ' + column + ' = ? WHERE id = ?', [dbpath, id], 
             (err) => {if (err) tools.error(err); })
         binary = 1;
     }
@@ -28,7 +33,6 @@ function updateimg(name, image, id) {
 var binary = 0;
 var form = new formidable.IncomingForm();
 form.parse(req, (err, field, files) => { if (err) tools.error(err);
-    console.log(field)
     if (empty(field.id)) {res.json({error : "No Artist Selected"});}
     else{
         var id = eschtml(field.id)
@@ -37,9 +41,9 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         location = eschtml(field.location)
         territory = eschtml(field.territory)
         if (!empty(files.img1))
-            updateimg('img1.jpg', files.img1, id)
+            updateimg('img1', files.img1, id)
         if (!empty(files.img2))
-            updateimg('img2.jpg', files.img2, id)
+            updateimg('img2', files.img2, id)
         if (!empty(name))
             update('name', name, id)
         if (!empty(description))

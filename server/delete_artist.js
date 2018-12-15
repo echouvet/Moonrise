@@ -11,8 +11,18 @@ form.parse(req, (err, field) => { if (err) tools.error(err);
 					res.json({error : "Artist doesn't exist"})
 				else
 				{
-					fs.unlinkSync(rows[0].img1);
-					fs.unlinkSync(rows[0].img2);
+					var dirpath = __dirname.replace("/server", "") +'/client/static/img/' + id
+					var img1path = __dirname.replace("/server", "") +'/client/static' + rows[0].img1
+					var img2path = __dirname.replace("/server", "") +'/client/static' + rows[0].img2
+					if (fs.existsSync(img1path)){
+						fs.unlinkSync(img1path)
+					}
+					if (fs.existsSync(img2path)){
+						fs.unlinkSync(img2path)
+					}
+					if (fs.existsSync(dirpath)){
+						fs.rmdirSync(dirpath)
+					}
 					con.query("DELETE FROM artists WHERE id = ?", [id], (err) => { if (err) tools.error(err);
 					else
 						res.json({success: "Artist Successfully Deleted"});
