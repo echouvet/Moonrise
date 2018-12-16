@@ -98,7 +98,8 @@
   </template>
    
    <p class="uppercase bg-moonrise mb-4 p-2 text-white text-sm">2. Company Data for contract and invoice</p>
-      <div class="flex flex-wrap -mx-3 mb-6">
+    
+    <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
         <app-input v-model="booking_request.company_name" type="text">
             Company name
@@ -158,15 +159,15 @@
         </app-input>
     </div>
   </div>
-
    
+   <p class="uppercase bg-moonrise mb-4 p-2 text-white text-sm">3. Event information</p>
+
+    <p class="uppercase bg-moonrise mb-4 p-2 text-white text-sm">4. Venue information</p>
+    <p class="uppercase bg-moonrise mb-4 p-2 text-white text-sm">5. Event sponsors</p>
+    <p class="uppercase bg-moonrise mb-4 p-2 text-white text-sm">6. Extra information</p>
+
 </form>
 </template>
-
-
-// full name:
-// Position in Organisation
-//Email address:
 
 
 // Event date: (DD/MM/YY)
