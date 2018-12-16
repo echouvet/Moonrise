@@ -1,26 +1,51 @@
 <template>
     <form class="w-full max-w-md">
-        <p class="bg-moonrise mb-4 p-2 text-white text-sm">We require all sections of this form completing to process this request.</p>
+        <!-- <p class="bg-moonrise mb-4 p-2 text-white text-sm">We require all sections of this form completing to process this request.</p> -->
+        <p class="uppercase bg-moonrise mb-4 p-2 text-white text-sm">1. Your information</p>
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-        <app-input v-model="booking_request.orga_handle">
-            Booker Organisation / Company Name 
+        <app-input v-model="booking_request.booker_handle" type="text">
+            Booker organisation name
         </app-input>
     </div>
     <div class="w-full md:w-1/2 px-3">
-         <app-input v-model="booking_request.orga_website">
-            Website
+         <app-input v-model="booking_request.booker_website" type="text">
+            Booker Website
         </app-input>
     </div>
   </div>
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full px-3">
-        <app-input v-model="booking_request.orga_address">
-            Booker address (please include zip code)
+        <app-input v-model="booking_request.booker_address" type="text">
+            Booker address (<span class="text-red text-xs">please include zip code</span>)
         </app-input>
     </div>
   </div>
-  <div class="flex flex-wrap -mx-3 mb-2">
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <app-input v-model="booking_request.booker_contact_person" type="text">
+          Booker Full Name
+        </app-input>
+    </div>
+    <div class="w-full md:w-1/2 px-3">
+         <app-input v-model="booking_request.booker_contact_email" type="email">
+            Booker Email
+        </app-input>
+    </div>
+  </div>
+   <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <app-input v-model="booking_request.booker_office_phone" type="text">
+          Office telephone <span class="text-red text-xs">inc full international dial code</span>
+        </app-input>
+    </div>
+    <div class="w-full md:w-1/2 px-3">
+         <app-input v-model="booking_request.booker_mobile_phone" type="text">
+            Mobile telephone inc full international dial code
+        </app-input>
+    </div>
+  </div>
+  <!-- <div class="flex flex-wrap -mx-3 mb-2">
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-city">
         City
@@ -48,15 +73,12 @@
       </label>
       <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-zip" type="text" placeholder="90210">
     </div>
-  </div>
+  </div> -->
 </form>
 </template>
 
-// Company/Promoter address (please include zip code):
-// Person handling booking (full name):
-// Email address:	
-// Office telephone inc full international dial code:			
-// Mobile telephone inc full international dial code:
+
+
 // Are you responsible for signing contract and making payments (Y/N):
 // Are you responsible for the advancing, if not please provide full name, email and telephone number?
 // Person responsible for signing contract and making payments (full name):	
@@ -106,8 +128,13 @@ export default {
     data() {
         return {
             booking_request: {
-                orga_handle: "",
-                orga_website: "",
+                booker_handle: "",
+                booker_website: "",
+                booker_address: "",
+                booker_contact_person: "",
+                booker_contact_email: "",
+                booker_office_phone: "",
+                booker_mobile_phone: ""
             }
         }
     }
