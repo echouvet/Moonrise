@@ -23,3 +23,5 @@ username VARCHAR(255), \
 password VARCHAR(255))`;
 con.query(user, (err) => {  if (err) tools.error(err);}) 
 
+eval(fs.readFileSync(__dirname + "/seed.js")+'')
+

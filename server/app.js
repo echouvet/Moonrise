@@ -38,7 +38,7 @@ con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
 })
 
-// eval(fs.readFileSync(__dirname + "/seed.js")+'')
+// 
 
 
 // Ports

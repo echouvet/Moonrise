@@ -33,8 +33,8 @@
                           <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Facebook</a><br>                                                
                           <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Resident Advisor</a>    
                       </div>
-                       <div class="bg-grey-lightest w-64 p-2 leading-loose shadow-lg ml-2">
-                          <a href="#" class="no-underline text-grey-darkest font-semibold hover:text-grey-darker">Booking Request</a><br>
+                       <div class="bg-grey-darkest hover:bg-grey-darker w-64 p-2 leading-loose shadow-lg ml-2 cursor-pointer">
+                          <a href="#" class="no-underline text-white font-semibold">Booking Request</a><br>
                       </div>
                   </div>
                 </div>
