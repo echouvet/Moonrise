@@ -1,9 +1,11 @@
 <template>
       <section id="side-navigation" class="hidden lg:block lg:w-1/6 h-full">
             <div class="px-2 w-full">
+                <a href="/">
                 <img class="w-full" src="../../assets/img/moon-full-rise.png" alt="moon-full-rise">
+                </a>
                 <div class="text-center">
-                    <a href="#" class="whitespace-no-wrap text-moonrise uppercase font-semibold no-underline">Moonrise Agency</a>
+                    <a href="/" class="whitespace-no-wrap text-moonrise uppercase font-semibold no-underline">Moonrise Agency</a>
                 </div>
                 <div class="mt-2 leading-loose  tracking-wide text-center">   
                     <div class="text-center relative group">
