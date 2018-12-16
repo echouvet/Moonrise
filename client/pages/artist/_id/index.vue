@@ -3,7 +3,7 @@
     <mobile-nav/>
         <div class="flex flex-wrap mb-6">
             <side-nav/>
-            <section id="page-content" class="lg:w-5/6 md:mt-4">
+            <section id="page-content" class="lg:w-5/6 md:mt-4 container mx-auto px-4">
               <img src="~/static/img/lovebirds.jpg">
               <div class="relative pb-8">
                 <div class="static bg-green">
@@ -28,12 +28,13 @@
                   </div>
                 </div>
                   <div class="w-full md:w-1/2 px-2">
-                    <div class="bg-moonrise w-64 p-2 leading-loose mt-4 md:mt-0 ml-2 md:mt-0">
-                          <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Maceo Plex Booking Request</a><br>
-                          <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white ">Maetrik Booking Request</a><br>
+                    <div class="bg-moonrise w-64 p-2 leading-loose mt-4 md:mt-0 ml-2">
                           <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Press Kit</a><br>
                           <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Facebook</a><br>                                                
                           <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Resident Advisor</a>    
+                      </div>
+                       <div class="bg-grey-lightest w-64 p-2 leading-loose shadow-lg ml-2">
+                          <a href="#" class="no-underline text-grey-darkest font-semibold hover:text-grey-darker">Booking Request</a><br>
                       </div>
                   </div>
                 </div>

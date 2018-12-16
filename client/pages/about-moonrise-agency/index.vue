@@ -3,9 +3,9 @@
     <mobile-nav/>
         <div class="flex flex-wrap mb-6">
             <side-nav/>
-            <section id="page-content" class="container mx-auto px-4 md:mt-4 lg:w-5/6">
+            <section id="page-content" class="px-4 md:mt-4 lg:w-5/6">
                 <h1 class="text-grey-darkest my-2">About Moonrise Agency</h1>
-                <hr class="border border-b border-grey-lighter">
+                <hr class="border border-b border-grey-lighter mb-4">
                 <p class="text-grey-darkest">Moon Rise is a synergy between artistic and technical skills to generate a talent boutique agency dedicated to artists & independent labels.</p><br>
                 <p class="text-grey-darkest">A fusion of music production, diffusion & promotion for underground & a warm musical culture.</p><br>
                 <p class="text-grey-darkest">A combination of artistic selection based on high quality realization, creation & a strong taste of production to reach the excellence of slow, deep and tasty disco & house music.</p><br>
