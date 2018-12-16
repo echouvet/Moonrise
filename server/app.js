@@ -42,7 +42,7 @@ con.connect((err) => { if (err) tools.error(err)
 
 
 // Ports
-server.listen(4000)
+server.listen(5050)
 app.use((req, res, next) =>{
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
