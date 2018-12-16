@@ -3,8 +3,8 @@
     <mobile-nav/>
         <div class="flex flex-wrap mb-6">
             <side-nav/>
-            <section id="page-content" class="lg:w-5/6">
-              <img src="../../assets/img/lovebirds.jpg">
+            <section id="page-content" class="lg:w-5/6 md:mt-4">
+              <img src="~/static/img/lovebirds.jpg">
               <div class="relative pb-8">
                 <div class="static bg-green">
                     <div class="absolute pin-b pin-l bg-moonrise p-4 text-grey-light mx-8 leading-loose shadow-lg">

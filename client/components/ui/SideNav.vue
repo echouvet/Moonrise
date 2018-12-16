@@ -1,11 +1,11 @@
 <template>
       <section id="side-navigation" class="hidden lg:block lg:w-1/6 h-full">
             <div class="px-2 w-full">
-                <a href="/">
-                <img class="w-full" src="../../assets/img/moon-full-rise.png" alt="moon-full-rise">
-                </a>
+                <nuxt-link to="/">
+                    <img class="w-full" src="~/static/img/moon-full-rise.png" alt="moon-full-rise">
+                </nuxt-link>
                 <div class="text-center">
-                    <a href="/" class="whitespace-no-wrap text-moonrise uppercase font-semibold no-underline">Moonrise Agency</a>
+                    <nuxt-link to="/" class="whitespace-no-wrap text-moonrise uppercase font-semibold no-underline">Moonrise Agency</nuxt-link>
                 </div>
                 <div class="mt-2 leading-loose  tracking-wide text-center">   
                     <div class="text-center relative group">
@@ -37,9 +37,8 @@
 </div>
   
                     <div class="flex flex-col mt-4">
-                        <a href="#" class="text-grey hover:text-grey-dark capitalize no-underline">About Moonrise</a>
-                        <a href="#" class="text-grey hover:text-grey-dark capitalize no-underline">Booking</a>
-                        <a href="#" class="text-grey hover:text-grey-dark capitalize no-underline">Contact</a>
+                        <nuxt-link to="about-moonrise-agency" class="text-grey hover:text-grey-dark capitalize no-underline">About Moonrise</nuxt-link>
+                        <nuxt-link to="booking" class="text-grey hover:text-grey-dark capitalize no-underline">Booking</nuxt-link>
                     </div>
                 </div>
             </div>
