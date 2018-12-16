@@ -39,14 +39,21 @@
 </template>
 
 <script>
-export default {
-    data () {
-        return {
-            visible: false
-        }
-    }
+// import { mapGetters, mapActions } from 'vuex'
 
-}
+// export default {
+//     methods: {
+//         ...mapActions({
+//             setArtists: 'artists/setArtists'
+//         })
+//     },
+//     computed: {
+//         ...mapGetters({
+//             getArtists: 'artists/getArtists'
+//         })
+//     }
+
+// }
 </script>
 
 <style>

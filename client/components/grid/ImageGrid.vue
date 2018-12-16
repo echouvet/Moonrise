@@ -1,7 +1,7 @@
 <template>
 <div>
 <!-- FOUR ROWS -->
-    <div class="lg:flex flex-wrap px-2 hidden "> 
+    <div class="lg:flex lg:flex-wrap lg:px-2 hidden"> 
          <div class="w-full sm:w-1/4 px-1">
             <img v-for="(el, i) in images" v-if="i < row_count4" :src="el.img1" :key="el.id" class="w-full pb-1"> 
         </div>
@@ -17,7 +17,7 @@
     </div>
 
 <!-- THREE ROWS -->
-    <div class="hidden md:flex md:flex-wrap px-2 lg:hidden"> 
+    <div class="hidden md:flex md:flex-wrap md:px-2 lg:hidden"> 
          <div class="w-full sm:w-1/3 px-1">
             <img v-for="(el, i) in images" v-if="i < row_count3" :src="el.img1" :key="el.id" class="w-full pb-1"> 
         </div>
@@ -53,13 +53,7 @@ export default {
             images: {},
 
         }
-    },   
-
-    //   computed: {
-    //     imageCount() {
-    //       return Object.keys(this.images).length;
-    //     },
-    // },
+    },
     mounted () {
         this.getartists()
     },
