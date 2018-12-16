@@ -68,9 +68,7 @@ export default {
         {
             this.$http.get('http://localhost:4000/artists').then(response => {
                 var data =  JSON.parse(response.data)
-                data.forEach(el => {
-                    el.img1 = el.img1.replace("/__nuxt/assets/img/", "/img/")
-                })
+                
                 this.images = data
                 this.row_count4 = data.length / 4
                 this.row_count3 = data.length / 3
