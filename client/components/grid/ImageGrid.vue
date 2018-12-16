@@ -24,20 +24,12 @@ export default {
             images: {},
 
         }
-    },   
-
-    //   computed: {
-    //     imageCount() {
-    //       return Object.keys(this.images).length;
-    //     },
-    // },
+    },
     mounted () {
         this.getartists()
-        // this.mesmaths()
     },
     methods: {
-        getartists()
-        {
+        getartists() {
             this.$http.get('http://localhost:4000/artists').then(response => {
                 var data =  JSON.parse(response.data)
                 console.log(data[0].img1)
@@ -61,8 +53,7 @@ export default {
         mesmaths2(col_count){
             var logos = count % col_count 
             this.row_count = count / col_count
-            while (logos > 0)
-            {
+            while (logos > 0) {
                 this.images.push({id: 50, link: 'link/link', name: 'Moon Rise'})
                 logos--;
             }

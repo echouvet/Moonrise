@@ -1,7 +1,7 @@
 <template>
-    <form class="w-full max-w-md">
+    <form class="w-full">
         <!-- <p class="bg-moonrise mb-4 p-2 text-white text-sm">We require all sections of this form completing to process this request.</p> -->
-        <p class="uppercase bg-moonrise mb-4 p-2 text-white text-sm">1. Your information</p>
+        <p class="uppercase bg-moonrise mb-4 p-2 text-white text-sm">1. Booker information</p>
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
         <app-input v-model="booking_request.booker_handle" type="text">
@@ -36,23 +36,68 @@
    <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
         <app-input v-model="booking_request.booker_office_phone" type="text">
-          Office telephone <span class="text-red text-xs">inc full international dial code</span>
+          Office phone (<span class="text-red text-xs">inc international code</span>)
         </app-input>
     </div>
     <div class="w-full md:w-1/2 px-3">
          <app-input v-model="booking_request.booker_mobile_phone" type="text">
-            Mobile telephone inc full international dial code
+            Mobile (<span class="text-red text-xs">inc international code</span>)
         </app-input>
     </div>
   </div>
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+         <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+           Are you responsible for signing contract and making payments ?
+         </label>
+         <app-toggle-input 
+                @click="isBookerResponsibleForPaymentsAndSigningContracts" 
+                :bool="booking_request.booker_is_responsible_for_payments_and_contracts.is_responsible">
+          </app-toggle-input>
+    </div>
+    <div v-if="!booking_request.booker_is_responsible_for_payments_and_contracts.is_responsible" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <app-input v-model="booking_request.booker_is_responsible_for_payments_and_contracts.full_name" type="text">
+          Please tell us who is responsible (<span class="text-red text-xs">Full Name</span>)
+        </app-input>
+    </div>
+    
+  </div>
+
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+           Are you responsible for the advancing ?
+         </label>
+         <app-toggle-input 
+                @click="isBookerResponsibleForAdvancings" 
+                :bool="booking_request.booker_is_responsible_advancing.is_responsible">
+          </app-toggle-input>
+    </div>
+  </div>
+  <template v-if="!booking_request.booker_is_responsible_advancing.is_responsible">
+    <p class="uppercase bg-moonrise mb-4 p-2 text-white text-sm">Please tell us who is making the advancing</p>
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <app-input v-model="booking_request.booker_is_responsible_advancing.full_name" type="text">
+          Full Name
+        </app-input>
+    </div>
+    <div class="w-full md:w-1/2 px-3">
+         <app-input v-model="booking_request.booker_is_responsible_advancing.email" type="email">
+          Email
+        </app-input>
+    </div>
+  </div>
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <app-input v-model="booking_request.booker_is_responsible_advancing.phone_number" type="text">
+            Phone Number (<span class="text-red text-xs">inc international code</span>)
+        </app-input>
+    </div>
+  </div>
+  </template>
 </form>
 </template>
-
-
-
-// Are you responsible for signing contract and making payments (Y/N):
-// Are you responsible for the advancing, if not please provide full name, email and telephone number?
-// Person responsible for signing contract and making payments (full name):	
 
 
 // Company Data for contract and invoice 
@@ -95,13 +140,13 @@
 
 
 <script>
-
-
+import AppToggleInput from '~/components/ui/AppToggleInput.vue'
 import AppInput from '~/components/ui/AppInput.vue'
 
 export default {
     components: {
-        AppInput
+        AppInput,
+        AppToggleInput
     },
     data() {
         return {
@@ -112,13 +157,31 @@ export default {
                 booker_contact_person: "",
                 booker_contact_email: "",
                 booker_office_phone: "",
-                booker_mobile_phone: ""
+                booker_mobile_phone: "",
+                booker_is_responsible_for_payments_and_contracts: {
+                    is_responsible: true,
+                    // if false
+                    full_name: "",
+                },
+                booker_is_responsible_advancing: {
+                    is_responsible: true,
+                    // if false
+                    full_name: "",
+                    email: "",
+                    phone_number: ""
+                }
+
+
             }
         }
+    },
+    methods: {
+      isBookerResponsibleForPaymentsAndSigningContracts(val) {
+        this.booking_request.booker_is_responsible_for_payments_and_contracts.is_responsible = val
+      },
+      isBookerResponsibleForAdvancings(val) {
+        this.booking_request.booker_is_responsible_advancing.is_responsible = val
+      }
     }
 }
 </script>
-
-<style>
-
-</style>
