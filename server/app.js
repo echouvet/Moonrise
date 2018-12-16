@@ -38,35 +38,11 @@ con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
 })
 
-server.listen(4000)
-
-
-
-// con.query('USE `Moonrise`', (err) => {  if (err) tools.error(err);})
-
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Crazy P", "/img/crazy-p.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Eli Escobar", "/img/eli-escobar.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Fred Everything", "/img/fred-everything.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Hot Toddy", "/img/hot-toddy.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Jkriv", "/img/jkriv.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Kon", "/img/kon.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Labeuz", "/img/labeuz.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Lay Far", "/img/lay-far.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Lovebirds", "/img/lovebirds.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Luke Solomon", "/img/luke-solomon.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Martin Hayes", "/img/martin-hayes.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("David Dacruz", "/img/moon-full-rise.png")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Moplen", "/img/moplen.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Qwestlife", "/img/qwestlife.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Rainer trueby", "/img/rainer-trueby.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Razor-N-Tape", "/img/razor-n-tape.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Ron Basejam", "/img/ron-basejam.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Sleazy Beats Soundsystem", "/img/sleazy-beats-soundsystem.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Sleazy McQueen", "/img/sleazy-mcqueen.jpg")', (err) =>{ if (err) throw err; })
-// con.query('INSERT INTO `artists` (`name`, `img1`) VALUES ("Wolf Music", "/img/wolf-music.jpg")', (err) =>{ if (err) throw err; })
+// eval(fs.readFileSync(__dirname + "/seed.js")+'')
 
 
 // Ports
+server.listen(4000)
 app.use((req, res, next) =>{
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
