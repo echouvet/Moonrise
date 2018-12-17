@@ -5,7 +5,9 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 		var	name = eschtml(field.name)
 	    description = eschtml(field.description)
 	    location = eschtml(field.location)
-	    territory = eschtml(field.territory)
+		territory = eschtml(field.territory)
+		
+		const slug = slugify(name)
 		//Errors
 		if (empty(files.img1))
 			res.json({error : "Missing First Image"})
@@ -31,8 +33,8 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 			res.json({error : "Your Description is over 65,500 CHARACTERSSSSS wtf Nico xD message Eloi if you really want this" })
 		else
 		{
-		    var sql = 'INSERT INTO `artists` (`name`, `description`, `location`, `territory`) VALUES (?, ?, ?, ?)';
-		    con.query(sql, [name, description, location, territory], 
+		    var sql = 'INSERT INTO `artists` (`name`, `slug`, `description`, `location`, `territory`) VALUES (?, ?, ?, ?, ?)';
+		    con.query(sql, [name, slug, description, location, territory], 
 		    	(err, result) => { if (err) tools.error(err); 
 				var dir =  __dirname.replace("/server", "") + '/client/static/img/' + result.insertId
 				if (!fs.existsSync(dir)){
