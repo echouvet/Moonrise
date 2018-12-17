@@ -1,11 +1,11 @@
 <template>
       <nav id="side-navigation" class="hidden lg:block lg:w-1/6 h-full">
             <div class="w-full">
-                <nuxt-link to="/">
+                <nuxt-link :to="{ name: 'index' }">
                     <img class="w-full" src="~/static/img/moon-full-rise.png" alt="moon-full-rise">
                 </nuxt-link>
                 <div class="text-center">
-                    <nuxt-link to="/" class="whitespace-no-wrap text-grey-darkest uppercase font-semibold no-underline">Moonrise Agency</nuxt-link>
+                    <nuxt-link :to="{ name: 'index' }" class="whitespace-no-wrap text-grey-darkest uppercase font-semibold no-underline">Moonrise Agency</nuxt-link>
                 </div>
                 <div class="mt-2 leading-loose tracking-wide text-center">  
                     <div class="flex flex-col items-center bg-moonrise p-2 w-full ">

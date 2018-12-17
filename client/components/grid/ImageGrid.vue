@@ -4,50 +4,22 @@
     <div class="lg:flex lg:flex-wrap lg:px-2 hidden"> 
          <div class="w-full sm:w-1/4 pr-1">
             <div class="grid pb-1" v-for="(el, i) in getArtists" v-if="i < getGrid.row_count4" :key="el.id">
-                <img :src="el.img1"  class="image w-full  pb-1">
-                <div class="artist-overlay">
-                    <div class="p-4 bg-moonrise">
-                        <nuxt-link :to="{ name: 'artist-slug', params: { slug: el.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
-                            {{ el.name }}
-                        </nuxt-link>
-                    </div>
-                </div>
+               <artist-image :artist="el" />
             </div>
         </div>
         <div class="w-full sm:w-1/4 px-1">
             <div class="grid  pb-1" v-for="(el, i) in getArtists" v-if="i >= getGrid.row_count4 && i < (getGrid.row_count4 * 2)" :key="el.id">
-                <img :src="el.img1"  class="image w-full pb-1">
-                <div class="artist-overlay">
-                    <div class="p-4 bg-moonrise">
-                        <nuxt-link :to="{ name: 'artist-slug', params: { slug: el.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
-                            {{ el.name }}
-                        </nuxt-link>
-                    </div>
-                </div>
+                <artist-image :artist="el" />
             </div>
         </div>
         <div class="w-full sm:w-1/4 px-1">
             <div class="grid  pb-1" v-for="(el, i) in getArtists" v-if="i >= (getGrid.row_count4 * 2) && i < (getGrid.row_count4 * 3)" :src="el.img1" :key="el.id">
-                <img :src="el.img1"  class="image w-full pb-1">
-                <div class="artist-overlay">
-                    <div class="p-4 bg-moonrise">
-                        <nuxt-link :to="{ name: 'artist-slug', params: { slug: el.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
-                            {{ el.name }}
-                        </nuxt-link>
-                    </div>
-                </div>
+                <artist-image :artist="el" />
             </div>
         </div>
         <div class="w-full sm:w-1/4 px-1">
             <div class="grid  pb-1" v-for="(el, i) in getArtists" v-if="i >= (getGrid.row_count4 * 3)" :src="el.img1" :key="el.id">
-                <img :src="el.img1"  class="image w-full pb-1">
-                <div class="artist-overlay">
-                    <div class="p-4 bg-moonrise">
-                        <nuxt-link :to="{ name: 'artist-slug', params: { slug: el.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
-                            {{ el.name }}
-                        </nuxt-link>
-                    </div>
-                </div>
+                <artist-image :artist="el" />
             </div>
         </div>
     </div>
@@ -56,38 +28,17 @@
     <div class="hidden md:flex md:flex-wrap md:px-2 lg:hidden"> 
          <div class="w-full sm:w-1/3 px-1">
              <div class="grid  pb-1" v-for="(el, i) in getArtists" v-if="i < getGrid.row_count3" :src="el.img1" :key="el.id">
-                <img :src="el.img1"  class="image w-full pb-1">
-                <div class="artist-overlay">
-                    <div class="p-4 bg-moonrise">
-                        <nuxt-link :to="{ name: 'artist-slug', params: { slug: el.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
-                            {{ el.name }}
-                        </nuxt-link>
-                    </div>
-                </div>
+                <artist-image :artist="el" />
             </div>
         </div>
         <div class="w-full sm:w-1/3 px-1">
             <div class="grid  pb-1" v-for="(el, i) in getArtists" v-if="i >= getGrid.row_count3 && i < (getGrid.row_count3 * 2)" :src="el.img1" :key="el.id">
-                <img :src="el.img1"  class="image w-full pb-1">
-                <div class="artist-overlay">
-                    <div class="p-4 bg-moonrise">
-                        <nuxt-link :to="{ name: 'artist-slug', params: { slug: el.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
-                            {{ el.name }}
-                        </nuxt-link>
-                    </div>
-                </div>
+                <artist-image :artist="el" />
             </div>
         </div>
         <div class="w-full sm:w-1/3 px-1">
              <div class="grid  pb-1" v-for="(el, i) in getArtists" v-if="i >= (getGrid.row_count3 * 2)" :src="el.img1" :key="el.id" >
-                <img :src="el.img1"  class="image w-full pb-1">
-                <div class="artist-overlay">
-                    <div class="p-4 bg-moonrise">
-                        <nuxt-link :to="{ name: 'artist-slug', params: { slug: el.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
-                            {{ el.name }}
-                        </nuxt-link>
-                    </div>
-                </div>
+                <artist-image :artist="el" />
             </div>
         </div>
     </div>
@@ -96,26 +47,12 @@
     <div class="flex flex-wrap px-2 md:hidden"> 
          <div class="w-full sm:w-1/2 px-1">
              <div class="grid  pb-1" v-for="(el, i) in getArtists" v-if="i < getGrid.row_count2" :src="el.img1" :key="el.id">
-                <img :src="el.img1"  class="image w-full pb-1">
-                <div class="artist-overlay">
-                    <div class="p-4 bg-moonrise">
-                        <nuxt-link :to="{ name: 'artist-slug', params: { slug: el.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
-                            {{ el.name }}
-                        </nuxt-link>
-                    </div>
-                </div>
+                <artist-image :artist="el" />
             </div>
         </div>
         <div class="w-full sm:w-1/2 px-1">
              <div class="grid  pb-1" v-for="(el, i) in getArtists" v-if="i >= getGrid.row_count2" :src="el.img1" :key="el.id">
-                <img :src="el.img1"  class="image w-full pb-1">
-                <div class="artist-overlay">
-                    <div class="p-4 bg-moonrise">
-                        <nuxt-link :to="{ name: 'artist-slug', params: { slug: el.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
-                            {{ el.name }}
-                        </nuxt-link>
-                    </div>
-                </div>
+                <artist-image :artist="el" />
             </div>
         </div>
     </div>
@@ -126,8 +63,12 @@
 
 <script>
 import { mapGetters } from "vuex"
+import ArtistImage from './ArtistImage.vue'
 
 export default {
+    components: {
+        ArtistImage
+    },
      computed: {
         ...mapGetters({
             getArtists: 'artists/getArtists',
