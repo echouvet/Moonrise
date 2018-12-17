@@ -41,6 +41,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         location = eschtml(field.location)
         territory = eschtml(field.territory)
 
+        // slugify function from tools how to import and use ?
         const slug = slugify(name)
 
         if (!empty(files.img1))

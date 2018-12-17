@@ -1,4 +1,5 @@
 var form = new formidable.IncomingForm();
+
 form.parse(req, (err, field, files) => { if (err) tools.error(err);
 	else {
 		// Security
@@ -7,6 +8,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 	    location = eschtml(field.location)
 		territory = eschtml(field.territory)
 		
+		// slugify function from tools how to import and use ?
 		const slug = slugify(name)
 		//Errors
 		if (empty(files.img1))
