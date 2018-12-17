@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="getArtists">
 <!-- FOUR ROWS -->
     <div class="lg:flex lg:flex-wrap lg:px-2 hidden"> 
          <div class="w-full sm:w-1/4 pr-1">
@@ -58,6 +58,9 @@
     </div>
 
 
+</div>
+<div v-else>
+    loading
 </div>
 </template>
 

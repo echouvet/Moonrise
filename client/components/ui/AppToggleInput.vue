@@ -1,9 +1,9 @@
 <template>
     <div class="flex items-center text-center">
-        <div @click="toggleState('yes')" :class="isActive ? 'bg-grey-darkest text-white' : ' text-moonrise font-semibold'" class="w-1/2 cursor-pointer py-2">
+        <div @click="toggleState('yes')" :class="isActive ? 'bg-grey-darkest text-white shadow-lg' : ' text-moonrise font-semibold'" class="w-1/2 cursor-pointer py-2">
             Yes
         </div>
-        <div @click="toggleState('no')" :class="!isActive ? 'bg-grey-darkest text-white' : ' text-moonrise font-semibold'" class="w-1/2 cursor-pointer py-2">
+        <div @click="toggleState('no')" :class="!isActive ? 'bg-grey-darkest text-white shadow-lg' : ' text-moonrise font-semibold'" class="w-1/2 cursor-pointer py-2">
             No
         </div>
     </div>

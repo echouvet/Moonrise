@@ -4,7 +4,7 @@
         <div class="flex flex-wrap mb-6">
             <side-nav/>
             <section v-if="artist" id="artist-page" class="lg:w-5/6 md:mt-4 container mx-auto px-4">
-              <img :src="artist.img2">
+              <img :src="artist.img2" class="max-h-half-screen">
               <div class="relative pb-8">
                 <div class="static bg-green">
                     <div class="absolute pin-b pin-l bg-moonrise p-4 text-grey-light mx-8 leading-loose shadow-lg">
@@ -15,13 +15,13 @@
                     </div>
                 </div>
               </div>
-              <div class="px-2">
+              <div class="px-">
               <div class="flex flex-wrap -mx-2">
-                <div class="w-full md:w-1/2 px-2 mt-4">
+                <div class="w-full md:w-2/3 lg:w-1/2 px-2 mt-4">
                   <div class="tracking-wide text-grey-darker mt-4 leading-normal px-2 md:w-5/6"  v-html="artist.description">
                   </div>
                 </div>
-                  <div class="w-full md:w-1/2 px-2">
+                  <div class="w-full md:w-1/3 lg:w-1/2 px-2 md:-ml-8">
                     <div class="bg-moonrise w-64 p-2 leading-loose mt-4 md:mt-0 ml-2">
                           <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Press Kit</a><br>
                           <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Facebook</a><br>                                                
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 import MobileNav from '~/components/ui/MobileNav.vue'
 import SideNav from '~/components/ui/SideNav.vue'
 
@@ -53,13 +53,18 @@ export default {
       artist: null
     }
   },
+  async validate({ params }) {
+    const {data} = await axios.get(`http://localhost:5050/artist/${params.slug}`)
+    if (data.slug === params.slug)
+      return true
+   return false // will stop Nuxt.js to render the route and display the error page
+  },
   mounted() {
     this.getArtist()
   },
   methods: {
     async getArtist() {
-      const {data} = await this.$axios.get(`http://localhost:5050/artist/${this.$route.params.slug}`)
-      console.log(data)
+      const {data} = await axios.get(`http://localhost:5050/artist/${this.$route.params.slug}`)
       if (data)
         this.artist = data
     }
