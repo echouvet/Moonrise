@@ -27,9 +27,11 @@
                           <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Facebook</a><br>                                                
                           <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Resident Advisor</a>    
                       </div>
-                       <div class="bg-grey-darkest hover:bg-grey-darker w-64 p-2 leading-loose shadow-lg ml-2 cursor-pointer">
-                          <nuxt-link :to="{ name: 'booking' }"  class="no-underline text-white font-semibold">Booking Request</nuxt-link>
-                      </div>
+                      <nuxt-link :to="{ name: 'booking' }"  class="no-underline text-white font-semibold">
+                        <div class="bg-grey-darkest hover:bg-grey-darker w-64 p-2 leading-loose shadow-lg ml-2 cursor-pointer">
+                            Booking Request
+                        </div>
+                      </nuxt-link>
                   </div>
                 </div>
               </div>

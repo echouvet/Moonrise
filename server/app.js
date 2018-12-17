@@ -11,7 +11,7 @@ const	empty = require("is-empty")
 const 	jwt = require('jwt-simple');
 const   ssn = require('express-session')
 const   MemoryStore = require('session-memory-store')(ssn)
-
+const 	bcrypt = require('bcrypt') 
 const	app = express()
 const   server = http.createServer(app)
 
@@ -95,34 +95,32 @@ app.use((req, res, next) =>{
 	})
 })
 .post('/login', (req,res)  => {
-	console.log((req.body.user.username != "" && req.body.user.password != ""))
 	if ((req.body.user.username != "" && req.body.user.password != ""))
 	{
 		username = eschtml(req.body.user.username)
 		password = eschtml(req.body.user.password)
 		con.query('SELECT * FROM user', (err, users) => { if (err) tools.error(err);
 			if (users.length === 0)
-				res.json({error: 'No users in db'})
-			users.forEach(el => {
-				if (el.username === username)
-				{
-					console.log(el.username === username)
-					bcrypt.compare(password, el.password, (err, final) => { if (err) tools.error(err);
-					
-						if (final === true)
-						{
-							var secret = Buffer.from('something weird that nobody will guess', 'hex');
-							var token = jwt.encode({eloi : 'nicolas'}, secret);
-							req.session.secret = secret;
-							req.session.token = token;
-							res.json({success: 'Logged in', token})
-						}
-						else
-							res.json({error: 'Wrong Password'})
-					})
-				}
-				else
-					res.json({error: 'Wrong username'})
+				return res.json({error: 'No users in db'})
+			users.find((user) => {
+				if (!(user.username === username))
+					return res.json({error: 'Wrong username'}) // change for the hackers
+				bcrypt.compare(password, user.password, (err, result) => {
+					// !!! FIX !!!
+					// at the moment it's always false maybe i don't create user properly
+					// I think the problem comes from the hash thats in the db bcrypt 
+					// doesnt work on it I tried an online bcrypt generator no luck
+					console.log(result)
+					if (result) {
+						var secret = Buffer.from('something weird that nobody will guess', 'hex');
+						var token = jwt.encode({eloi : 'nicolas'}, secret);
+						req.session.secret = secret;
+						req.session.token = token;
+						return res.json({success: 'Logged in', token})
+					} else {
+						return res.json({error: 'Wrong password'}) // change for the hackers
+					}
+				})
 			})
 		})
 	}

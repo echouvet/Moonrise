@@ -1,7 +1,7 @@
 <template>
       <nav id="side-navigation" class="hidden lg:block lg:w-1/6 h-full">
             <div class="w-full">
-                <nuxt-link :to="{ name: 'index' }">
+                <nuxt-link :to="{ name: 'index'}">
                     <img class="w-full" src="~/static/img/moon-full-rise.png" alt="moon-full-rise">
                 </nuxt-link>
                 <div class="text-center">
