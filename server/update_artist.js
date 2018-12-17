@@ -40,12 +40,18 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         description = eschtml(field.description)
         location = eschtml(field.location)
         territory = eschtml(field.territory)
+
+        // slugify function from tools how to import and use ?
+        const slug = slugify(name)
+
         if (!empty(files.img1))
             updateimg('img1', files.img1, id)
         if (!empty(files.img2))
             updateimg('img2', files.img2, id)
-        if (!empty(name))
+        if (!empty(name)) {
             update('name', name, id)
+            update('slug', slug, id)
+        }
         if (!empty(description))
         {
             if (description.length > 65500)

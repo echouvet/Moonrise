@@ -3,6 +3,7 @@ con.query('USE `Moonrise`', (err) => {  if (err) tools.error(err);})
 var artists = `CREATE TABLE IF NOT EXISTS artists ( \
 id INT AUTO_INCREMENT PRIMARY KEY, \
 name VARCHAR(255), \
+slug VARCHAR(255), \
 description TEXT, \
 location VARCHAR(255), \
 territory VARCHAR(255), \
@@ -23,5 +24,5 @@ username VARCHAR(255), \
 password VARCHAR(255))`;
 con.query(user, (err) => {  if (err) tools.error(err);}) 
 
-eval(fs.readFileSync(__dirname + "/seed.js")+'')
+// eval(fs.readFileSync(__dirname + "/seed.js")+'')
 

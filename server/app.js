@@ -38,13 +38,10 @@ con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
 })
 
-// 
-
-
 // Ports
 server.listen(5050)
 app.use((req, res, next) =>{
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -64,10 +61,10 @@ app.use((req, res, next) =>{
 		res.json(JSON.stringify(data)) // la liste de tout les artists a t'envoyer
 	})
 })
-.get('/artist/:id', (req,res) => {
-	var artist = eschtml(req.params.id)
-    con.query("SELECT * FROM artists WHERE id = ?", [artist], (err, response) => { if (err) tools.error(err);
-    	con.query("SELECT * FROM links WHERE artist_id = ?", [artist], 
+.get('/artist/:slug', (req,res) => {
+	var artist = eschtml(req.params.slug)
+    con.query("SELECT * FROM artists WHERE slug = ?", [artist], (err, response) => { if (err) tools.error(err);
+    	con.query("SELECT * FROM links WHERE artist_id = ?", [artist.id], 
     		(err, links) => { if (err) tools.error(err);
 			else
 			{
