@@ -56,11 +56,6 @@
             </div>
         </div>
     </div>
-
-
-</div>
-<div v-else>
-    loading
 </div>
 </template>
 
@@ -112,4 +107,6 @@ export default {
 .grid:hover .artist-overlay {
   opacity: 1;
 }
+
+
 </style>

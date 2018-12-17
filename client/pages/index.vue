@@ -11,9 +11,6 @@
 </template>
 
 <script>
-import Vues from 'vue'
-import ajax from 'vue-h-ajax';
-Vues.use(ajax);
 import MobileNav from '~/components/ui/MobileNav.vue'
 import SideNav from '~/components/ui/SideNav.vue'
 import FrontPage from '~/components/pages/FrontPage.vue'

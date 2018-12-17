@@ -101,7 +101,7 @@ import MultipleInput from './MultipleInput.vue'
 			}
 		},
 		mounted() {
-			this.$http.get("http://localhost:4000/artists").then(response => {
+			this.$http.get("http://localhost:5050/artists").then(response => {
 				this.artists = JSON.parse(response.data)
 			}).catch(err => { console.log(err) })
 		},
@@ -117,18 +117,18 @@ import MultipleInput from './MultipleInput.vue'
 				const formData = new FormData()
 				if (this.button == 'new') {
 					const formData = this.appendall()
-					this.postrequest("http://localhost:4000/artist/create", formData)
+					this.postrequest("http://localhost:5050/artist/create", formData)
 				}
 				else if (this.button == 'update') {
 					const formData = this.appendall()
-					this.postrequest("http://localhost:4000/artist/update", formData)
+					this.postrequest("http://localhost:5050/artist/update", formData)
 				}
 				else if (this.button == 'del')
 				{
 					const formData = new FormData()
 					formData.append("id", this.current_artist.id)
 					console.log(this.current_artist.id)
-					this.postrequest("http://localhost:4000/artist/delete", formData)
+					this.postrequest("http://localhost:5050/artist/delete", formData)
 				}
 				
 			},

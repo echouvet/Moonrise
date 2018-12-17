@@ -5,12 +5,15 @@
             <side-nav/>
             <section id="page-content" class="w-full lg:w-5/6  h-full px-2 mt-4 flex items-center h-screen ">
               <div class="w-full max-w-xs container mx-auto">
-                  <form @submit.prevent="login" class="bg-moonrise shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div v-show="error.visible" class="container mx-auto bg-grey-darkest shadow-lg text-white h-12 flex items-center justify-center">
+                    {{ error.message }}
+                </div>
+                  <form  class="bg-moonrise shadow-lg px-8 pt-6 pb-8 mb-4">
                     <div class="mb-4">
                       <label class="block text-white text-sm font-bold mb-2" for="username">
                         Username
                       </label>
-                      <input v-model="user.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none" id="username" type="text" placeholder="Username">
+                      <input v-model="user.username" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none" id="username" type="text" placeholder="Username">
                     </div>
                     <div class="mb-6">
                       <label class="block text-white text-sm font-bold mb-2" for="password">
@@ -19,7 +22,7 @@
                       <input v-model="user.password" class="hadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none" id="password" type="password" placeholder="******************">
                     </div>
                     <div class="flex items-center justify-between">
-                      <button class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none" type="submit">
+                      <button @click.prevent="login" class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none" type="submit">
                         Sign In
                       </button>
                     </div>
@@ -31,9 +34,6 @@
 </template>
 
 <script>
-import Vues from 'vue'
-import ajax from 'vue-h-ajax';
-Vues.use(ajax);
 import MobileNav from '~/components/ui/MobileNav.vue'
 import SideNav from '~/components/ui/SideNav.vue'
 import FrontPage from '~/components/pages/FrontPage.vue'
@@ -47,22 +47,37 @@ export default {
   data () {
     return {
         user: {
-          name: "",
+          username: "",
           password: ""
+        },
+        error: {
+          visible: false,
+          message: ""
         }
       }
     },
     methods: {
       login() {
-          if (this.emptyCheck())
-            return alert(this.user.name)
-          else
-            return alert('check your inputs')
+        this.$axios.post('http://localhost:5050/login', { user: this.user})
+          .then(res => {
+            console.log(res.data.error)
+            if (res.data.error)
+              this.showError(res.data.error)
+          })
+          .catch(err => {
+            console.log(err)
+          })
       },
       emptyCheck() {
-          if (this.user.name === "" || this.user.password === "")
+          if (this.user.name === "" || this.user.password === "") {
+              this.showError("Please check your inputs")
             return false
-          return true
+          }
+          return this.login()
+      },
+      showError(message) {
+        this.error.message = message
+        this.error.visible = true
       }
     }
 }

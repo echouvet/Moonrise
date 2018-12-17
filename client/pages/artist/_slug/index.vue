@@ -48,9 +48,12 @@ export default {
     MobileNav,
     SideNav,
   },
+ head() {
+      return { title: this.artist.name }
+  },
   data () {
     return {
-      artist: null
+      artist: null,
     }
   },
   async validate({ params }) {
@@ -59,16 +62,15 @@ export default {
       return true
    return false // will stop Nuxt.js to render the route and display the error page
   },
-  mounted() {
-    this.getArtist()
+  asyncData ({ params }) {
+    return axios.get(`http://localhost:5050/artist/${params.slug}`)
+        .then((res) => {
+          return {
+            artist: res.data
+          }
+        })
   },
-  methods: {
-    async getArtist() {
-      const {data} = await axios.get(`http://localhost:5050/artist/${this.$route.params.slug}`)
-      if (data)
-        this.artist = data
-    }
-  }
+  
 }
 </script>
 

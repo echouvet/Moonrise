@@ -95,13 +95,20 @@ app.use((req, res, next) =>{
 	})
 })
 .post('/login', (req,res)  => {
-	if (req.body && req.body.login && req.body.password)
+	console.log((req.body.user.username != "" && req.body.user.password != ""))
+	if ((req.body.user.username != "" && req.body.user.password != ""))
 	{
-		con.query('SELECT * FROM user', (err, user) => { if (err) tools.error(err);
-			user.forEach(el => {
-				if (el.login === eschtml(req.body.login))
+		username = eschtml(req.body.user.username)
+		password = eschtml(req.body.user.password)
+		con.query('SELECT * FROM user', (err, users) => { if (err) tools.error(err);
+			if (users.length === 0)
+				res.json({error: 'No users in db'})
+			users.forEach(el => {
+				if (el.username === username)
 				{
-					bcrypt.compare(req.body.pass, el.pass, (err, final) => { if (err) tools.error(err);
+					console.log(el.username === username)
+					bcrypt.compare(password, el.password, (err, final) => { if (err) tools.error(err);
+					
 						if (final === true)
 						{
 							var secret = Buffer.from('something weird that nobody will guess', 'hex');
@@ -115,7 +122,7 @@ app.use((req, res, next) =>{
 					})
 				}
 				else
-					res.json({error: 'Wrong Login'})
+					res.json({error: 'Wrong username'})
 			})
 		})
 	}
