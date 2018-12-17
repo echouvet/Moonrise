@@ -73,11 +73,16 @@ export default {
               this.showError("Please check your inputs")
             return false
           }
+          this.resetError()
           return this.login()
       },
       showError(message) {
         this.error.message = message
         this.error.visible = true
+      },
+      resetError() {
+        this.error.visible = false
+        this.error.message = ""
       }
     }
 }
