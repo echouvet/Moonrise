@@ -107,10 +107,9 @@ import MultipleInput from './MultipleInput.vue'
 		},
 		methods: {
 			setartist(id) {
-				this.current_artist.id = id
-				this.artists.forEach(el => {
-					if (el.id = this.current_artist.id)
-						this.current_artist = el
+				this.artists.find(artist => {
+					if (artist.id === id)
+						this.current_artist = artist
 				})
 			},
 			postForm() {
