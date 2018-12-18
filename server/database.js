@@ -18,7 +18,7 @@ link TEXT, \
 placeholder VARCHAR(255))`;
 con.query(links, (err) => {  if (err) tools.error(err);}) 
 
-var user = `CREATE TABLE IF NOT EXISTS user ( \
+var user = `CREATE TABLE IF NOT EXISTS users ( \
 id INT AUTO_INCREMENT PRIMARY KEY, \
 username VARCHAR(255), \
 password VARCHAR(255))`;

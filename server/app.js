@@ -38,6 +38,15 @@ con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
 })
 
+// PUO CREE UN CMPTE
+	// var pass = "admin"
+	// var login = "admin"
+	// bcrypt.hash(pass, 10, function(err, hash) { if (err) tools.error(err); 
+	// 	sql = 'INSERT INTO `users` (`username`, `password`) VALUES (?, ?)'
+	// 	con.query(sql, [login, hash], (err) => {if (err) tools.error(err);})
+	// })
+
+
 // Ports
 server.listen(5050)
 app.use((req, res, next) =>{
@@ -86,42 +95,41 @@ app.use((req, res, next) =>{
 .post('/artist/update', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
 })
-.post('/register', (req,res)  => {
-	pass = eschtml(req.body.pass)
-	login = eschtml(req.body.login)
-	bcrypt.hash(pass, 10, function(err, hash) { if (err) tools.error(err); 
-		sql = 'INSERT INTO `users` (`username`, `password`) VALUES (?, ?)'
-		con.query(sql, [login, pass], (err) => {if (err) tools.error(err);})
-	})
-})
 .post('/login', (req,res)  => {
 	if ((req.body.user.username != "" && req.body.user.password != ""))
 	{
 		username = eschtml(req.body.user.username)
 		password = eschtml(req.body.user.password)
-		con.query('SELECT * FROM user', (err, users) => { if (err) tools.error(err);
+		con.query('SELECT * FROM users', (err, users) => { if (err) tools.error(err);
 			if (users.length === 0)
-				return res.json({error: 'No users in db'})
-			users.find((user) => {
-				if (!(user.username === username))
-					return res.json({error: 'Wrong username'}) // change for the hackers
-				bcrypt.compare(password, user.password, (err, result) => {
-					// !!! FIX !!!
-					// at the moment it's always false maybe i don't create user properly
-					// I think the problem comes from the hash thats in the db bcrypt 
-					// doesnt work on it I tried an online bcrypt generator no luck
-					console.log(result)
-					if (result) {
-						var secret = Buffer.from('something weird that nobody will guess', 'hex');
-						var token = jwt.encode({eloi : 'nicolas'}, secret);
-						req.session.secret = secret;
-						req.session.token = token;
-						return res.json({success: 'Logged in', token})
-					} else {
-						return res.json({error: 'Wrong password'}) // change for the hackers
-					}
-				})
-			})
+			{
+				 tools.error("NO USERS IN DB MESSAGE ELOI")
+				res.json({error: 'No users in db'})
+			}
+			else
+			{
+				var user = users.find((user) => { return user.username === username })
+				console.log(user)
+				if (empty(user))
+					res.json({error: 'Wrong Username'})
+				else
+				{
+					console.log(user.password)
+					console.log(password)
+					bcrypt.compare(password, user.password, (err, result) => {
+						console.log(result)
+						if (result) {
+							var secret = Buffer.from('something weird that nobody will guess', 'hex');
+							var token = jwt.encode({eloi : 'nicolas'}, secret);
+							req.session.secret = secret;
+							req.session.token = token;
+							res.json({success: 'Logged in', token})
+						} else {
+							res.json({error: 'Wrong Password'}) // change for the hackers
+						}
+					})
+				}
+			}
 		})
 	}
 	else
@@ -133,6 +141,7 @@ app.use((req, res, next) =>{
 	else
 		next();
 })
+
 .post('/verify', (req, res, next) => {
 	if (req.body)
 	{

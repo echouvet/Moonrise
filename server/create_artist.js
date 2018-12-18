@@ -8,8 +8,6 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 	    location = eschtml(field.location)
 		territory = eschtml(field.territory)
 		
-		// slugify function from tools how to import and use ?
-		const slug = slugify(name)
 		//Errors
 		if (empty(files.img1))
 			res.json({error : "Missing First Image"})
@@ -35,6 +33,8 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 			res.json({error : "Your Description is over 65,500 CHARACTERSSSSS wtf Nico xD message Eloi if you really want this" })
 		else
 		{
+
+			const slug = tools.slugify(name)
 		    var sql = 'INSERT INTO `artists` (`name`, `slug`, `description`, `location`, `territory`) VALUES (?, ?, ?, ?, ?)';
 		    con.query(sql, [name, slug, description, location, territory], 
 		    	(err, result) => { if (err) tools.error(err); 
