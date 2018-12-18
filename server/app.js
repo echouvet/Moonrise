@@ -86,15 +86,7 @@ app.use((req, res, next) =>{
 .get('/error/:data', (req,res)  => {
     tools.error(req.params.data);
 })
-.post('/artist/delete', (req,res) => {
-	eval(fs.readFileSync(__dirname + "/delete_artist.js")+'')
-})
-.post('/artist/create', (req,res) => {
-	eval(fs.readFileSync(__dirname + "/create_artist.js")+'')
-})
-.post('/artist/update', (req,res) => {
-	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
-})
+
 .post('/login', (req,res)  => {
 	if ((req.body.user.username != "" && req.body.user.password != ""))
 	{
@@ -141,7 +133,6 @@ app.use((req, res, next) =>{
 	else
 		next();
 })
-
 .post('/verify', (req, res, next) => {
 	if (req.body)
 	{
@@ -157,7 +148,15 @@ app.use((req, res, next) =>{
 	else
 		res.json({error: '404 not found'})
 })
-
+.post('/artist/delete', (req,res) => {
+	eval(fs.readFileSync(__dirname + "/delete_artist.js")+'')
+})
+.post('/artist/create', (req,res) => {
+	eval(fs.readFileSync(__dirname + "/create_artist.js")+'')
+})
+.post('/artist/update', (req,res) => {
+	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
+})
 .all('*', (req,res) => {
     res.json({error: '404 not found'})
 })

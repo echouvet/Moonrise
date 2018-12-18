@@ -1,7 +1,7 @@
 <template>
 <div v-if="getArtists">
 <!-- FOUR ROWS -->
-    <div class="lg:flex lg:flex-wrap lg:px-2 hidden"> 
+    <div class="xl:flex xl:flex-wrap xl:px-2 hidden"> 
          <div class="w-full sm:w-1/4 pr-1">
             <div class="grid pb-1" v-for="(el, i) in getArtists" v-if="i < getGrid.row_count4" :key="el.id">
                <artist-image :artist="el" />
@@ -25,7 +25,7 @@
     </div>
 
 <!-- THREE ROWS -->
-    <div class="hidden md:flex md:flex-wrap md:px-2 lg:hidden"> 
+    <div class="hidden md:flex md:flex-wrap md:px-2 xl:hidden"> 
          <div class="w-full sm:w-1/3 px-1">
              <div class="grid  pb-1" v-for="(el, i) in getArtists" v-if="i < getGrid.row_count3" :src="el.img1" :key="el.id">
                 <artist-image :artist="el" />
