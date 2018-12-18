@@ -21,6 +21,9 @@
                    <div class="flex flex-col text-center leading-loose">
                         <nuxt-link :to="{ name: 'about-moonrise-agency' }" class="text-white capitalize no-underline hover:text-grey">About Moonrise</nuxt-link>
                         <nuxt-link :to="{ name: 'booking' }"  class="text-white capitalize no-underline hover:text-grey">Booking</nuxt-link>
+
+                         <a v-if="this.$store.state.auth.loggedIn" class="text-white cursor-pointer hover:text-grey" @click="logout">Logout</a>
+
             </div>
                  <span @click="toggleModal" class="absolute pin-t pin-r pt-4 px-4">
                         <svg class="h-10 w-10 text-white fill-current" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
@@ -42,7 +45,10 @@ export default {
     methods: {
     toggleModal() {
       this.modal = !this.modal
-    }
+    },
+      async logout() {
+            await this.$auth.logout();
+        }
   },
   computed: {
         ...mapGetters({

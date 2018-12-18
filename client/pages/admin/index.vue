@@ -19,6 +19,7 @@ import SideNav from '~/components/ui/SideNav.vue'
 import AppForm from '~/components/form/AppForm.vue'
 
 export default {
+  middleware: 'auth',
   components: {
     MobileNav,
     SideNav,

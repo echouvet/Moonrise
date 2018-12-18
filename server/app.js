@@ -14,6 +14,7 @@ const   MemoryStore = require('session-memory-store')(ssn)
 const 	bcrypt = require('bcrypt') 
 const	app = express()
 const   server = http.createServer(app)
+const cookieParser = require('cookie-parser')
 
 
 const sessionMiddleware = ssn({ 
@@ -27,7 +28,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 app.use(sessionMiddleware);
-
+app.use(cookieParser())
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -37,7 +38,7 @@ var con = mysql.createConnection({
 con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
 })
-
+var secret = Buffer.from('something weird that nobody will guess', 'hex');
 // PUO CREE UN CMPTE
 	// var pass = "admin"
 	// var login = "admin"
@@ -50,22 +51,21 @@ con.connect((err) => { if (err) tools.error(err)
 // Ports
 server.listen(5050)
 app.use((req, res, next) =>{
-    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
 	next();
 })
-
 .get('/artists', (req,res) => {
 	con.query("SELECT * FROM artists", (err, response) => { if (err) tools.error(err);
-		// var data = response.forEach(el => {
-			// con.query("SELECT * FROM links WHERE artist_id = ?", [el.id], 
-   //  			(err, links) => { if (err) tools.error(err);
-   //  			else 
-			// 		el.links = links
-			// }) 
-		// })
+		var data = response.forEach(el => {
+			con.query("SELECT * FROM links WHERE artist_id = ?", [el.id], 
+    			(err, links) => { if (err) tools.error(err);
+    			else 
+					el.links = links
+			}) 
+		})
 		data = tools.shuffle(response)
 		res.json(JSON.stringify(data)) // la liste de tout les artists a t'envoyer
 	})
@@ -86,12 +86,14 @@ app.use((req, res, next) =>{
 .get('/error/:data', (req,res)  => {
     tools.error(req.params.data);
 })
-
+.post('/logout', (req, res) => {
+	req.session.destroy(); req.session = 0;
+})
 .post('/login', (req,res)  => {
-	if ((req.body.user.username != "" && req.body.user.password != ""))
+	if (!empty(req.body) && !empty(req.body.username) && !empty(req.body.password))
 	{
-		username = eschtml(req.body.user.username)
-		password = eschtml(req.body.user.password)
+		username = eschtml(req.body.username)
+		password = eschtml(req.body.password)
 		con.query('SELECT * FROM users', (err, users) => { if (err) tools.error(err);
 			if (users.length === 0)
 			{
@@ -101,21 +103,14 @@ app.use((req, res, next) =>{
 			else
 			{
 				var user = users.find((user) => { return user.username === username })
-				console.log(user)
 				if (empty(user))
 					res.json({error: 'Wrong Username'})
 				else
 				{
-					console.log(user.password)
-					console.log(password)
 					bcrypt.compare(password, user.password, (err, result) => {
-						console.log(result)
 						if (result) {
-							var secret = Buffer.from('something weird that nobody will guess', 'hex');
 							var token = jwt.encode({eloi : 'nicolas'}, secret);
-							req.session.secret = secret;
-							req.session.token = token;
-							res.json({success: 'Logged in', token})
+							res.json({token: {token} })
 						} else {
 							res.json({error: 'Wrong Password'}) // change for the hackers
 						}
@@ -127,27 +122,18 @@ app.use((req, res, next) =>{
 	else
 		res.json({error: 'Empty Field'})
 })
-.use((req, res, next) =>{
-	if (empty(req.session) || empty(req.session.secret) || empty(req.session.token))
-		res.json({error: '404 not found'})
-	else
-		next();
+.get('/user', (req, res) => {
+	res.json({data: "Nicolas"})
 })
-.post('/verify', (req, res, next) => {
-	if (req.body)
-	{
-		var decoded = jwt.decode(req.body.token, req.session.secret);
-		if (decoded.eloi === 'nicolas' && req.body.token === req.session.token)
-		{
-			res.json({success: 'Logged In'})
-			next();
-		}
-		else
-			res.json({error: 'Not logged in'})
-	}
-	else
-		res.json({error: '404 not found'})
-})
+// .use((req, res, next) =>{
+// 	// console.log(req.headers.authorization)
+// 	// console.log(req.headers.cookie)
+// 	var decoded = jwt.decode("Le Token", secret);
+// 	if (decoded.eloi === 'nicolas')
+// 		next();
+// 	else
+// 		res.json({error: '404 not found'})
+// })
 .post('/artist/delete', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/delete_artist.js")+'')
 })

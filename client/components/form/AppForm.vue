@@ -3,11 +3,12 @@
  <form @submit.prevent="postForm()" enctype="multipart/form-data" class="w-full container mx-auto">
 	<h2 class="text-grey-dark">Modify Artists</h2>
 	<div class="w-full my-4">
-		<select v-model="edited" class="w-full md:w-1/3 h-12 block bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+		<select v-model="edited" @change="setArtist(edited.id)" class="w-full md:w-1/3 h-12 block bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
 			<option value="0">Select Artist</option>
 			<option v-for="artist in artists" :key="artist.id" :value="artist">{{ artist.name }}</option>
 		</select>
 	</div>
+	{{ state }}
 	<hr class="border border-grey-lighter">
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -101,16 +102,22 @@ import MultipleInput from './MultipleInput.vue'
 			}
 		},
 		mounted() {
+			this.$auth.fetchUser()
+			// console.log(this.$auth)
+			console.log(this.$auth.token)
+			console.log(this.$auth.$state)
 			this.$http.get("http://localhost:5050/artists").then(response => {
 				this.artists = JSON.parse(response.data)
 			}).catch(err => { console.log(err) })
 		},
+		computed: {
+		    state() {
+		      return JSON.stringify(this.$auth.$state, undefined, 2)
+		   }
+		},
 		methods: {
-			setartist(id) {
-				this.artists.find(artist => {
-					if (artist.id === id)
-						this.current_artist = artist
-				})
+			setArtist(id) {
+				this.current_artist = this.artists.find(el => {return (el.id === id)})
 			},
 			postForm() {
 				const formData = new FormData()

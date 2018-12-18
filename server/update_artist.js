@@ -42,7 +42,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         territory = eschtml(field.territory)
 
         // slugify function from tools how to import and use ?
-        const slug = slugify(name)
+        
 
         if (!empty(files.img1))
             updateimg('img1', files.img1, id)
@@ -50,6 +50,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
             updateimg('img2', files.img2, id)
         if (!empty(name)) {
             update('name', name, id)
+            const slug = tools.slugify(name)
             update('slug', slug, id)
         }
         if (!empty(description))
@@ -66,15 +67,14 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         if (!empty(field.links))
         {
             var links = JSON.parse(field.links)
+            con.query('DELETE FROM links WHERE artist_id = ?', [id], (err) => { if (err) tools.error(err);})
             links.forEach((el) => {
                 if (!empty(el))
                 {
-                     var link_name = eschtml(el.link_name)
+                    var link_name = eschtml(el.link_name)
                     var link = eschtml(el.link)
-                    var linkid = eschtml(el.id)
-                    var artistid = eschtml(el.artist_id)
-                    con.query('UPDATE `links` SET (`link`, `placeholder`) VALUES (?, ?) WHERE id = ? AND artist_id = ?', 
-                        [link_name, link, linkid, artistid], (err) => { if (err) tools.error(err); })
+                    con.query('INSERT INTO `links` (`artist_id`, `link`, `placeholder`) VALUES (?, ?, ?)', 
+                        [id, link_name, link], (err) => { if (err) tools.error(err); })
                 }
             })
         }

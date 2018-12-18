@@ -5,9 +5,9 @@
             <side-nav/>
             <section id="page-content" class="w-full lg:w-5/6  h-full px-2 mt-4 flex items-center h-screen ">
               <div class="w-full max-w-xs container mx-auto">
-                <div v-show="error.visible" class="container mx-auto bg-grey-darkest shadow-lg text-white h-12 flex items-center justify-center">
+                <!-- <div v-show="error.visible" class="container mx-auto bg-grey-darkest shadow-lg text-white h-12 flex items-center justify-center">
                     {{ error.message }}
-                </div>
+                </div> -->
                   <form  class="bg-moonrise shadow-lg px-8 pt-6 pb-8 mb-4">
                     <div class="mb-4">
                       <label class="block text-white text-sm font-bold mb-2" for="username">
@@ -39,6 +39,7 @@ import SideNav from '~/components/ui/SideNav.vue'
 import FrontPage from '~/components/pages/FrontPage.vue'
 
 export default {
+  middleware: 'guest',
   components: {
     FrontPage,
     MobileNav,
@@ -50,40 +51,42 @@ export default {
           username: "",
           password: ""
         },
-        error: {
-          visible: false,
-          message: ""
-        }
+        error: null,
+        // error: {
+        //   visible: false,
+        //   message: ""
+        // }
       }
     },
     methods: {
-      login() {
-        this.$axios.post('http://localhost:5050/login', { user: this.user})
-          .then(res => {
-            console.log(res.data.error)
-            if (res.data.error)
-              this.showError(res.data.error)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      },
-      emptyCheck() {
-          if (this.user.name === "" || this.user.password === "") {
-              this.showError("Please check your inputs")
-            return false
+      async login() {
+      this.error = null
+      return this.$auth
+        .loginWith('local', {
+          data: {
+            username: this.user.username,
+            password: this.user.password
           }
-          this.resetError()
-          return this.login()
+        }).catch(e => {
+          this.error = e + '';
+        })
       },
-      showError(message) {
-        this.error.message = message
-        this.error.visible = true
-      },
-      resetError() {
-        this.error.visible = false
-        this.error.message = ""
-      }
+      // emptyCheck() {
+      //     if (this.user.name === "" || this.user.password === "") {
+      //         this.showError("Please check your inputs")
+      //       return false
+      //     }
+      //     this.resetError()
+      //     return this.login()
+      // },
+      // showError(message) {
+      //   this.error.message = message
+      //   this.error.visible = true
+      // },
+      // resetError() {
+      //   this.error.visible = false
+      //   this.error.message = ""
+      // }
     }
 }
 </script>

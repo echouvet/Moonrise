@@ -49,5 +49,16 @@ module.exports = {
     			.replace(/\-\-+/g, '-')         // Replace multiple - with single -
     			.replace(/^-+/, '')             // Trim - from start of text
     			.replace(/-+$/, '');            // Trim - from end of text
-	}
+	}, 
+	parseCookies: (headers) => {
+    var list = {},
+        rc = headers.cookie;
+
+    rc && rc.split(';').forEach(function( cookie ) {
+        var parts = cookie.split('=');
+        list[parts.shift().trim()] = decodeURI(parts.join('='));
+    });
+
+    return list;
+}
 };
