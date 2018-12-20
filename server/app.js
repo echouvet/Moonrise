@@ -127,10 +127,13 @@ app.post('/login', (req,res)  => {
 						if (result) {
 							const accessToken = jsonwebtoken.sign(
 								{
+								   // seriously need to add an expiration 
+								  // there are no sessions in single page application
+								  // the jwt also signs the same thing it's only expiration date
+								  // that can prevent from serious harm if the token is stolen 
+								  // there are ways to do it I just dont know how to show
 								  username,
-								  picture: 'https://github.com/nuxt.png',
-								  name: 'User Nicholas',
-								  scope: ['test', 'user']
+								  scope: ['admin']
 								},
 								'dummy'
 							  )
