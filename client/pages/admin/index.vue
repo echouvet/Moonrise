@@ -11,19 +11,27 @@
 </template>
 
 <script>
-import Vues from 'vue'
-import ajax from 'vue-h-ajax';
-Vues.use(ajax);
 import MobileNav from '~/components/ui/MobileNav.vue'
 import SideNav from '~/components/ui/SideNav.vue'
 import AppForm from '~/components/form/AppForm.vue'
+import { mapGetters } from 'vuex'
 
 export default {
-  middleware: 'auth',
+  middleware: ['auth'],
   components: {
     MobileNav,
     SideNav,
     AppForm
+  },
+  // updated () {
+  //   if (!this.getToken || this.getLoggedIn === false)
+  //     this.$router.push('/login')
+  // },
+  computed: {
+    ...mapGetters({
+      getToken: 'auth/getToken',
+      getLoggedIn: 'auth/getLoggedIn'
+    })
   }
 }
 </script>

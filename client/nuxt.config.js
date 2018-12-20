@@ -41,33 +41,32 @@ module.exports = {
   */
   modules: [
   '@nuxtjs/axios',
-  '@nuxtjs/auth',
     // Doc: https://github.com/nuxt-community/axios-module#usage
   ],
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: {url: '/login', method: 'post', propertyName: 'token.accessToken' },
-          logout: {url: '/logout', method: 'post'},
-          user: {url: '/user', method: 'get', propertyName: 'data'},
-        },
-        tokenRequired: true,
-        tokenType: 'Bearer'
-      },
-    },
-    redirect: {
-      login: '/login',
-      logout: '/',
-      callback: '/login',
-      home: '/admin'
-    }
-  },
+  // auth: {
+  //   strategies: {
+  //     local: {
+  //       endpoints: {
+  //         login: {url: '/login', method: 'post', propertyName: 'token.accessToken' },
+  //         logout: {url: '/logout', method: 'post'},
+  //         user: {url: '/user', method: 'get', propertyName: 'data'},
+  //       },
+  //       tokenRequired: true,
+  //       tokenType: 'Bearer'
+  //     },
+  //   },
+  //   redirect: {
+  //     login: '/login',
+  //     logout: '/',
+  //     callback: '/login',
+  //     home: '/admin'
+  //   }
+  // },
   /*
   ** Axios module configuration
   */
   axios: {
-    baseURL: 'http://localhost:5050/'
+    baseURL: 'http://localhost:5050'
   },
 
   /*

@@ -19,7 +19,7 @@
                         <nuxt-link :to="{ name: 'about-moonrise-agency' }" class="text-white font-semibold  capitalize no-underline">About Moonrise</nuxt-link>
                         <nuxt-link :to="{ name: 'booking' }"  class="text-white font-semibold  capitalize no-underline">Booking</nuxt-link>
 
-                        <a v-if="this.$store.state.auth.loggedIn" class="text-white cursor-pointer font-semibold" @click="logout">Logout</a>
+                        <a v-if="isloggedIn" class="text-white cursor-pointer font-semibold" @click="logout">Logout</a>
 
 
             </div>
@@ -27,18 +27,23 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     computed: {
         ...mapGetters({
-            getArtists: 'artists/getArtists'
+            getArtists: 'artists/getArtists',
+            isloggedIn: 'auth/getLoggedIn'
         })
     },
     methods: {
-      async logout() {
-            await this.$auth.logout();
-        }
+      logout() {
+            this.logUserOut()
+            this.$router.push('/')
+        },
+        ...mapActions({
+            logUserOut: 'auth/logUserOut'
+        })
     }
 }
 </script>

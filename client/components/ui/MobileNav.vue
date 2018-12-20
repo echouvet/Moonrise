@@ -22,7 +22,7 @@
                         <nuxt-link :to="{ name: 'about-moonrise-agency' }" class="text-white capitalize no-underline hover:text-grey">About Moonrise</nuxt-link>
                         <nuxt-link :to="{ name: 'booking' }"  class="text-white capitalize no-underline hover:text-grey">Booking</nuxt-link>
 
-                         <a v-if="this.$store.state.auth.loggedIn" class="text-white cursor-pointer hover:text-grey" @click="logout">Logout</a>
+                         <a v-if="isLoggedIn" class="text-white cursor-pointer hover:text-grey" @click="logout">Logout</a>
 
             </div>
                  <span @click="toggleModal" class="absolute pin-t pin-r pt-4 px-4">
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     data() {
@@ -46,13 +46,18 @@ export default {
     toggleModal() {
       this.modal = !this.modal
     },
-      async logout() {
-            await this.$auth.logout();
-        }
+    logout() {
+            this.logUserOut()
+            this.$router.push('/')
+        },
+        ...mapActions({
+            logUserOut: 'auth/logUserOut'
+        })
   },
   computed: {
         ...mapGetters({
-            getArtists: 'artists/getArtists'
+            getArtists: 'artists/getArtists',
+            isLoggedIn: 'auth/getLoggedIn'
         })
     }
 }

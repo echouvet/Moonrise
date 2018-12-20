@@ -68,13 +68,7 @@ con.connect((err) => { if (err) tools.error(err)
 
 // Ports
 server.listen(5050)
-// app.use((req, res, next) =>{
-//     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//     // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//     // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-//     // res.setHeader('Access-Control-Allow-Credentials', true);
-// 	next();
-// })
+
 app.get('/artists', (req,res) => {
 
 	con.query("SELECT * FROM artists", (err, response) => { if (err) tools.error(err);
@@ -127,7 +121,6 @@ app.post('/login', (req,res)  => {
 				else
 				{
 					bcrypt.compare(password, user.password, (err, result) => {
-						console.log(result)
 						if (result) {
 							const accessToken = jsonwebtoken.sign(
 								{
@@ -138,14 +131,13 @@ app.post('/login', (req,res)  => {
 								},
 								'dummy'
 							  )
-							console.log(accessToken)
 							  res.json({
 								token: {
 								  accessToken
 								}
 							})
 						} else {
-							res.json({error: `Wrong Password ${result}`}) // change for the hackers
+							res.json({error: `Wrong`}) // change for the hackers
 						}
 					})
 				}
@@ -156,12 +148,6 @@ app.post('/login', (req,res)  => {
 		res.json({error: 'Empty Field'})
 })
 
-// app.use((req, res, next) =>{
-// 	jwt({
-// 		secret: 'dummy'
-// 	  })
-// 	next()
-// })
 app.get('/user', (req, res) => {
 	console.log(req.headers)
 	res.json({data: "User Nicolas"})
@@ -177,12 +163,3 @@ app.post('/artist/update', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
 })
 
-app.post('/logout', (req, res) => {
-	req.session.destroy(); 
-	req.session = 0;
-	res.json({status: 'OK'})
-})
-
-// app.all('*', (req,res) => {
-//     res.json({error: '404 not found'})
-// })

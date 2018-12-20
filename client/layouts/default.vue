@@ -8,12 +8,15 @@
 import { mapActions } from 'vuex'
 
 export default {
+   middleware: ['check-auth'],
     mounted() {
       this.initArtistsState()
+      //this.initAuth()
     },
     methods: {
       ...mapActions({
-        initArtistsState: 'artists/initArtistsState'
+        initArtistsState: 'artists/initArtistsState',
+        //initAuth: 'auth/initAuth'
       })
     },
 }

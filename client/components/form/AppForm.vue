@@ -8,7 +8,6 @@
 			<option v-for="artist in artists" :key="artist.id" :value="artist">{{ artist.name }}</option>
 		</select>
 	</div>
-	{{ state }}
 	<hr class="border border-grey-lighter">
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -87,8 +86,9 @@
 
 <script>
 import MultipleInput from './MultipleInput.vue'
+import { mapGetters } from 'vuex'
 
-  export default {
+export default {
 		components: {
 			MultipleInput
 		},
@@ -101,19 +101,15 @@ import MultipleInput from './MultipleInput.vue'
 				edited: 0
 			}
 		},
-		mounted() {
-			this.$auth.fetchUser()
-			// console.log(this.$auth)
-			console.log(this.$auth.token)
-			console.log(this.$auth.$state)
-			this.$http.get("http://localhost:5050/artists").then(response => {
+		mounted() {		
+			this.$axios.get("http://localhost:5050/artists").then(response => {
 				this.artists = JSON.parse(response.data)
 			}).catch(err => { console.log(err) })
 		},
 		computed: {
-		    state() {
-		      return JSON.stringify(this.$auth.$state, undefined, 2)
-		   }
+			...mapGetters({
+				getToken: 'auth/getToken'
+			})
 		},
 		methods: {
 			setArtist(id) {
@@ -148,14 +144,20 @@ import MultipleInput from './MultipleInput.vue'
     			this.current_artist.img2 = this.$refs.img2.files[0]
   			},
   			postrequest(url, data) {
-				this.$http.post(url, data).then(response => {
-					if (response.data)
-					{
-						if (response.data.error)
-							console.log("Error : " + response.data.error) //faire ceci dans une div rougeP
-						else if (response.data.success)
-							console.log("Success : " + response.data.success) //faire ceci dans une div verte P
-					}
+				this.$axios.post(url, data, {
+										headers: {
+												'authorization': this.getToken,
+												'Accept' : 'application/json',
+												'Content-Type': 'application/json'
+										}
+									}).then(response => {
+										if (response.data)
+										{
+											if (response.data.error)
+												console.log("Error : " + response.data.error) //faire ceci dans une div rougeP
+											else if (response.data.success)
+												console.log("Success : " + response.data.success) //faire ceci dans une div verte P
+										}
 				}).catch(error => console.error(error)) //ceci on y touche pas xD
 			},
 			appendall(){
