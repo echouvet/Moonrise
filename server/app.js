@@ -9,27 +9,44 @@ const 	cors = require('cors')
 const	tools = require("./tools.js")
 const	eschtml = require("escape-html")
 const	empty = require("is-empty")
-const 	jwt = require('jwt-simple');
-const   ssn = require('express-session')
-const   MemoryStore = require('session-memory-store')(ssn)
 const 	bcrypt = require('bcrypt') 
+const jwt = require('express-jwt')
+const jsonwebtoken = require('jsonwebtoken')
 const	app = express()
 const   server = http.createServer(app)
 
 
 
-const sessionMiddleware = ssn({ 
-	secret: "Eloi has a beautiful secret",
-    store: new MemoryStore(),
-    key: 'sid',
-    resave: true, 
-    saveUninitialized: true
-});
+
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors('*'))
-app.use(sessionMiddleware);
+app.use(
+	jwt({
+	  secret: 'dummy'
+	}).unless({
+	  path: [
+		{
+			url: '/artists',
+			methods: ['GET']
+		},
+		{
+			url: /^\/artist\/.*/,
+			methods: ['GET']
+		},
+		{
+			url: '/login',
+			methods: ['GET', 'POST']
+		},
+		{
+			url: /^\/error\/.*/,
+			methods: ['GET']
+		},
+	   ]
+	})
+  )
+
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -40,26 +57,26 @@ con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
 })
 
-var secret = Buffer.from('something weird that nobody will guess', 'hex');
 // PUO CREE UN CMPTE
 	// var pass = "admin"
 	// var login = "admin"
 	// bcrypt.hash(pass, 10, function(err, hash) { if (err) tools.error(err); 
-	// 	sql = 'INSERT INTO `users` (`username`, `password`) VALUES (?, ?)'
+	// 	sql = 'INSERT INTO `user` (`username`, `password`) VALUES (?, ?)'
 	// 	con.query(sql, [login, hash], (err) => {if (err) tools.error(err);})
 	// })
 
 
 // Ports
 server.listen(5050)
-app.use((req, res, next) =>{
-    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    // res.setHeader('Access-Control-Allow-Credentials', true);
-	next();
-})
-.get('/artists', (req,res) => {
+// app.use((req, res, next) =>{
+//     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+//     // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     // res.setHeader('Access-Control-Allow-Credentials', true);
+// 	next();
+// })
+app.get('/artists', (req,res) => {
+
 	con.query("SELECT * FROM artists", (err, response) => { if (err) tools.error(err);
 		var data = response.forEach(el => {
 			con.query("SELECT * FROM links WHERE artist_id = ?", [el.id], 
@@ -72,7 +89,8 @@ app.use((req, res, next) =>{
 		res.json(JSON.stringify(data)) // la liste de tout les artists a t'envoyer
 	})
 })
-.get('/artist/:slug', (req,res) => {
+
+app.get('/artist/:slug', (req,res) => {
 	var artist = eschtml(req.params.slug)
     con.query("SELECT * FROM artists WHERE slug = ?", [artist], (err, response) => { if (err) tools.error(err);
     	con.query("SELECT * FROM links WHERE artist_id = ?", [artist.id], 
@@ -85,13 +103,12 @@ app.use((req, res, next) =>{
     	})
 	})
 })
-.get('/error/:data', (req,res)  => {
+
+app.get('/error/:data', (req,res)  => {
     tools.error(req.params.data);
 })
-.post('/logout', (req, res) => {
-	req.session.destroy(); req.session = 0;
-})
-.post('/login', (req,res)  => {
+
+app.post('/login', (req,res)  => {
 	if (!empty(req.body) && !empty(req.body.username) && !empty(req.body.password))
 	{
 		username = eschtml(req.body.username)
@@ -110,11 +127,25 @@ app.use((req, res, next) =>{
 				else
 				{
 					bcrypt.compare(password, user.password, (err, result) => {
+						console.log(result)
 						if (result) {
-							var accessToken = jwt.encode({eloi : 'nicolas'}, secret);
-							res.json({token: {token} })
+							const accessToken = jsonwebtoken.sign(
+								{
+								  username,
+								  picture: 'https://github.com/nuxt.png',
+								  name: 'User Nicholas',
+								  scope: ['test', 'user']
+								},
+								'dummy'
+							  )
+							console.log(accessToken)
+							  res.json({
+								token: {
+								  accessToken
+								}
+							})
 						} else {
-							res.json({error: 'Wrong Password'}) // change for the hackers
+							res.json({error: `Wrong Password ${result}`}) // change for the hackers
 						}
 					})
 				}
@@ -124,28 +155,34 @@ app.use((req, res, next) =>{
 	else
 		res.json({error: 'Empty Field'})
 })
-.use((req, res, next) =>{
-	console.log(req.headers.authorization)
-	// console.log(req.headers.cookie)
-	var decoded = jwt.decode({eloi : 'nicolas'}, secret);
-	if (decoded.eloi === 'nicolas')
-		next();
-	else
-		res.json({error: '404 not found'})
-})
-.get('/user', (req, res) => {
-	res.json({data: "Nicolas"})
+
+// app.use((req, res, next) =>{
+// 	jwt({
+// 		secret: 'dummy'
+// 	  })
+// 	next()
+// })
+app.get('/user', (req, res) => {
+	console.log(req.headers)
+	res.json({data: "User Nicolas"})
 })
 
-.post('/artist/delete', (req,res) => {
+app.post('/artist/delete', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/delete_artist.js")+'')
 })
-.post('/artist/create', (req,res) => {
+app.post('/artist/create', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/create_artist.js")+'')
 })
-.post('/artist/update', (req,res) => {
+app.post('/artist/update', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
 })
-.all('*', (req,res) => {
-    res.json({error: '404 not found'})
+
+app.post('/logout', (req, res) => {
+	req.session.destroy(); 
+	req.session = 0;
+	res.json({status: 'OK'})
 })
+
+// app.all('*', (req,res) => {
+//     res.json({error: '404 not found'})
+// })
