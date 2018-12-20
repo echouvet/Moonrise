@@ -3,7 +3,7 @@
     <mobile-nav/>
         <div class="flex flex-wrap mb-6">
             <side-nav/>
-            <section id="page-content" class="px-4 md:mt-4 md:w-5/6 md:container md:mx-auto">
+            <section id="page-content" class="px-4 md:mt-4 md:w-3/4 xl:w-5/6 md:container md:mx-auto">
                 <h1 class="text-grey-darkest my-2">About Moonrise Agency</h1>
                 <hr class="border border-b border-grey-lighter mb-4">
                 <p class="text-grey-darkest lg:w-5/6">Moon Rise is a synergy between artistic and technical skills to generate a talent boutique agency dedicated to artists & independent labels.</p><br>

@@ -25,6 +25,7 @@
 
 <script>
   export default {
+  props: ["links"],
 	data: function () {
     	return { values: [{}] };
   },

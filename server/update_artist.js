@@ -79,7 +79,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
             })
         }
         if (binary = 1)
-            res.json({Success: 'Artist Successfully Updated'})
+            res.json({success: true})
         else
             res.json({error: 'Nothing Was Updated'})
     }

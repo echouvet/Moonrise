@@ -39,8 +39,8 @@ export const authenticateUser = ({commit}, user) => {
        }).then(res => {
            const token = res.data.token.accessToken
         if (token) {
-            cookie.set('token', `Bearer ${token}`)
-            commit('SET_TOKEN', `Bearer ${token}`)
+            cookie.set('token', token)
+            commit('SET_TOKEN', token)
             commit('SET_LOGGED_IN', true) 
         }
        }).catch(e => {
@@ -54,6 +54,7 @@ export const initAuth = ({commit}, req) => {
         if (req.headers.cookie) {
             const jwt = req.headers.cookie.split(';').find(key => key.trim().startsWith('token='))
             if (jwt) {
+                
                 token = jwt.split('=')[1]
                 commit('SET_TOKEN', token)
                 commit('SET_LOGGED_IN', true)

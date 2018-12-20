@@ -1,5 +1,5 @@
 <template>
-      <nav id="side-navigation" class="hidden lg:block lg:w-1/6 h-full">
+      <nav id="side-navigation" class="hidden lg:block lg:w-1/4 xl:w-1/6 h-full">
             <div class="w-full">
                 <nuxt-link :to="{ name: 'index'}">
                     <img class="w-full" src="~/static/img/moon-full-rise.png" alt="moon-full-rise">

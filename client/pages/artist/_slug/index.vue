@@ -3,7 +3,7 @@
     <mobile-nav/>
         <div class="flex flex-wrap mb-6">
             <side-nav/>
-            <section v-if="artist" id="artist-page" class="lg:w-5/6 md:mt-4 container mx-auto px-4">
+            <section v-if="artist" id="artist-page" class="md:w-3/4 xl:w-5/6 md:mt-4 container mx-auto px-4">
               <img :src="artist.img2" class="max-h-half-screen">
               <div class="relative pb-8">
                 <div class="static bg-green">
@@ -18,7 +18,7 @@
               <div class="px-">
               <div class="flex flex-wrap -mx-2">
                 <div class="w-full md:w-2/3 lg:w-1/2 px-2 mt-4">
-                  <div class="tracking-wide text-grey-darker mt-4 leading-normal px-2 md:w-5/6"  v-html="artist.description">
+                  <div class="tracking-wide text-grey-darker mt-4 leading-normal px-2 md:w-5/6" style="white-space: pre-line;"  v-html="artist.description">
                   </div>
                 </div>
                   <div class="w-full md:w-1/3 lg:w-1/2 px-2 md:-ml-8">

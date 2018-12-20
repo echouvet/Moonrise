@@ -63,7 +63,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 				con.query('UPDATE artists SET img1 = ?, img2 = ? WHERE id = ?', [img1, img2, result.insertId], 
 					(err) => {if (err) tools.error(err); })
 			})
-		    res.json({success: "Artist was successfully created !"})
+		    res.json({success: true})
 		 }
 	}
 })

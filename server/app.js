@@ -72,11 +72,13 @@ server.listen(5050)
 app.get('/artists', (req,res) => {
 
 	con.query("SELECT * FROM artists", (err, response) => { if (err) tools.error(err);
+		console.log(response)
 		var data = response.forEach(el => {
 			con.query("SELECT * FROM links WHERE artist_id = ?", [el.id], 
     			(err, links) => { if (err) tools.error(err);
     			else 
 					el.links = links
+					//console.log(el.links)
 			}) 
 		})
 		data = tools.shuffle(response)
@@ -91,6 +93,7 @@ app.get('/artist/:slug', (req,res) => {
     		(err, links) => { if (err) tools.error(err);
 			else
 			{
+				console.log(links)
 				response[0].links = links
 				res.json(response[0])
 			}
@@ -148,18 +151,13 @@ app.post('/login', (req,res)  => {
 		res.json({error: 'Empty Field'})
 })
 
-app.get('/user', (req, res) => {
-	console.log(req.headers)
-	res.json({data: "User Nicolas"})
-})
-
-app.post('/artist/delete', (req,res) => {
+app.post('/moonrise/delete', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/delete_artist.js")+'')
 })
-app.post('/artist/create', (req,res) => {
+app.post('/moonrise/create', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/create_artist.js")+'')
 })
-app.post('/artist/update', (req,res) => {
+app.post('/moonrise/update', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
 })
 

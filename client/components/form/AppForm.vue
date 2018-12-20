@@ -41,7 +41,7 @@
   </div>
 		<div class="flex flex-wrap -mx-3 mb-6">
 			<div class="w-full px-3">
-				<multiple-input @input="getLinks($event)"></multiple-input>
+				<multiple-input :links="current_artist.links" @input="getLinks($event)"></multiple-input>
 			</div>
 		</div>
     <div class="flex flex-wrap -mx-3 mb-6">
@@ -102,13 +102,14 @@ export default {
 			}
 		},
 		mounted() {		
-			this.$axios.get("http://localhost:5050/artists").then(response => {
-				this.artists = JSON.parse(response.data)
-			}).catch(err => { console.log(err) })
+			setTimeout(() => {
+				this.artists = this.getArtists
+			}, 3000)
 		},
 		computed: {
 			...mapGetters({
-				getToken: 'auth/getToken'
+				getToken: 'auth/getToken',
+				getArtists: 'artists/getArtists',
 			})
 		},
 		methods: {
@@ -119,18 +120,18 @@ export default {
 				const formData = new FormData()
 				if (this.button == 'new') {
 					const formData = this.appendall()
-					this.postrequest("http://localhost:5050/artist/create", formData)
+					this.postrequest("http://localhost:5050/moonrise/create", formData)
 				}
 				else if (this.button == 'update') {
 					const formData = this.appendall()
-					this.postrequest("http://localhost:5050/artist/update", formData)
+					this.postrequest("http://localhost:5050/moonrise/update", formData)
 				}
 				else if (this.button == 'del')
 				{
 					const formData = new FormData()
 					formData.append("id", this.current_artist.id)
 					console.log(this.current_artist.id)
-					this.postrequest("http://localhost:5050/artist/delete", formData)
+					this.postrequest("http://localhost:5050/moonrise/delete", formData)
 				}
 				
 			},
@@ -145,19 +146,21 @@ export default {
   			},
   			postrequest(url, data) {
 				this.$axios.post(url, data, {
-										headers: {
-												'authorization': this.getToken,
-												'Accept' : 'application/json',
-												'Content-Type': 'application/json'
-										}
-									}).then(response => {
-										if (response.data)
-										{
-											if (response.data.error)
-												console.log("Error : " + response.data.error) //faire ceci dans une div rougeP
-											else if (response.data.success)
-												console.log("Success : " + response.data.success) //faire ceci dans une div verte P
-										}
+					headers: {
+							'authorization': `Bearer ${this.getToken}`,
+							'Accept' : 'application/json',
+							'Content-Type': 'application/json'
+					}
+				}).then(response => {
+					if (response.data)
+					{
+						if (response.data.error)
+							alert("Error : " + response.data.error) //faire ceci dans une div rougeP
+						else if (response.data.success) {
+								this.current_artist = {}
+								alert("Success : " + response.data.success)
+						}
+					}
 				}).catch(error => console.error(error)) //ceci on y touche pas xD
 			},
 			appendall(){

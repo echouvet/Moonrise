@@ -7,7 +7,7 @@ export const SET_LOGGED_IN = (state, val) => {
 }
 
 export const SET_TOKEN = (state, token) => {
-    state.token = token
+    state.token = token 
 }
 
 export const CLEAR_AUTH_STATE = (state) => {

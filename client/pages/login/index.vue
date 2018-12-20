@@ -3,7 +3,7 @@
     <mobile-nav/>
         <div class="flex flex-wrap mb-6">
             <side-nav/>
-            <section id="page-content" class="w-full lg:w-5/6  h-full px-2 mt-4 flex items-center h-screen ">
+            <section id="page-content" class="w-full md:w-3/4 xl:w-5/6 h-full px-2 mt-4 flex items-center h-screen ">
               <div class="w-full max-w-xs container mx-auto">
                 <div v-show="error.visible" class="container mx-auto bg-grey-darkest shadow-lg text-white h-12 flex items-center justify-center">
                     {{ error.message }}
