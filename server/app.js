@@ -15,9 +15,6 @@ const jsonwebtoken = require('jsonwebtoken')
 const	app = express()
 const   server = http.createServer(app)
 
-
-
-
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -125,25 +122,14 @@ app.post('/login', (req,res)  => {
 				{
 					bcrypt.compare(password, user.password, (err, result) => {
 						if (result) {
-							const accessToken = jsonwebtoken.sign(
-								{
-								   // seriously need to add an expiration 
-								  // there are no sessions in single page application
-								  // the jwt also signs the same thing it's only expiration date
-								  // that can prevent from serious harm if the token is stolen 
-								  // there are ways to do it I just dont know how to show
-								  username,
-								  scope: ['admin']
-								},
-								'dummy'
-							  )
+							const accessToken = jsonwebtoken.sign({ username }, 'dummy', { expiresIn: 60 * 60 * 24 })
 							  res.json({
 								token: {
 								  accessToken
 								}
 							})
 						} else {
-							res.json({error: `Wrong`}) // change for the hackers
+							res.json({error: `Wrong`}) 
 						}
 					})
 				}

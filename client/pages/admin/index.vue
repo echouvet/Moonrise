@@ -26,7 +26,8 @@ export default {
   computed: {
     ...mapGetters({
       getToken: 'auth/getToken',
-      getLoggedIn: 'auth/getLoggedIn'
+      getLoggedIn: 'auth/getLoggedIn',
+      getExpDate: 'auth/getExpDate'
     })
   }
 }

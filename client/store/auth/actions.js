@@ -24,12 +24,8 @@ export const clearAuthState = ({commit}) => {
 export const logUserOut = ({commit}) => {
     commit('CLEAR_AUTH_STATE')
     cookie.remove('token')
+    cookie.remove('exp')
 }
-
-// setTimeout(() => {
-//     commit('CLEAR_AUTH_STATE')
-//     $nuxt.$router.push('/login');
-// }, 1000 * 60 * 60 * 24)
 
 export const authenticateUser = ({commit}, user) => {
     return axios.post('http://localhost:5050/login', {
@@ -39,8 +35,11 @@ export const authenticateUser = ({commit}, user) => {
        }).then(res => {
            const token = res.data.token.accessToken
         if (token) {
+            const tomorow = new Date(new Date().getTime() + (24 * 60 * 60 * 1000)).toISOString()
             cookie.set('token', token)
+            cookie.set('exp', tomorow)
             commit('SET_TOKEN', token)
+            commit('SET_EXP', tomorow)
             commit('SET_LOGGED_IN', true) 
         }
        }).catch(e => {
@@ -49,15 +48,18 @@ export const authenticateUser = ({commit}, user) => {
 }
 
 export const initAuth = ({commit}, req) => {
-    let token
     if (req) {
         if (req.headers.cookie) {
-            const jwt = req.headers.cookie.split(';').find(key => key.trim().startsWith('token='))
-            if (jwt) {
-                
-                token = jwt.split('=')[1]
-                commit('SET_TOKEN', token)
-                commit('SET_LOGGED_IN', true)
+            let jwt = req.headers.cookie.split(';').find(key => key.trim().startsWith('token='))
+            let date = req.headers.cookie.split(';').find(key => key.trim().startsWith('exp='))
+            if (jwt && date) {                
+                let token = jwt.split('=')[1]
+                let exp = date.split('=')[1]
+                if (new Date() < new Date(exp)) {
+                    commit('SET_TOKEN', token)
+                    commit('SET_EXP', exp)
+                    commit('SET_LOGGED_IN', true)
+                }
             }
         } else {
             commit('CLEAR_AUTH_STATE')

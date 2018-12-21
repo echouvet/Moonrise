@@ -1,6 +1,6 @@
 
 <template>
- <form @submit.prevent="postForm()" enctype="multipart/form-data" class="w-full container mx-auto">
+ <form v-if="getToken" @submit.prevent="postForm()" enctype="multipart/form-data" class="w-full container mx-auto">
 	<h2 class="text-grey-dark">Modify Artists</h2>
 	<div class="w-full my-4">
 		<select v-model="edited" @change="setArtist(edited.id)" class="w-full md:w-1/3 h-12 block bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
@@ -86,7 +86,7 @@
 
 <script>
 import MultipleInput from './MultipleInput.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
 		components: {
@@ -110,9 +110,13 @@ export default {
 			...mapGetters({
 				getToken: 'auth/getToken',
 				getArtists: 'artists/getArtists',
+				getExpDate: 'auth/getExpDate'
 			})
 		},
 		methods: {
+			...mapActions({
+				logUserOut: 'auth/logUserOut'
+			}),
 			setArtist(id) {
 				this.current_artist = this.artists.find(el => {return (el.id === id)})
 			},
@@ -145,7 +149,8 @@ export default {
     			this.current_artist.img2 = this.$refs.img2.files[0]
   			},
   			postrequest(url, data) {
-				this.$axios.post(url, data, {
+				if (this.checkForExpDate()) {
+					this.$axios.post(url, data, {
 					headers: {
 							'authorization': `Bearer ${this.getToken}`,
 							'Accept' : 'application/json',
@@ -162,6 +167,7 @@ export default {
 						}
 					}
 				}).catch(error => console.error(error)) //ceci on y touche pas xD
+				}
 			},
 			appendall(){
 				const formData = new FormData()
@@ -177,7 +183,18 @@ export default {
 			},
 			butn(button){
 				this.button = button
-			}
+			},
+			checkForExpDate() {
+				let now = new Date() 
+				let exp = new Date(this.getExpDate)
+				console.log(now > exp)
+				if (now > exp) {
+					this.logUserOut()
+					this.$router.push('/login')
+				}
+				else 
+					return true
+				}
 		}
 	}
 </script>
