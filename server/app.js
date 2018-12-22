@@ -57,7 +57,7 @@ con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
 })
 
-// PUO CREE UN CMPTE
+
 	// var pass = "admin"
 	// var login = "admin"
 	// bcrypt.hash(pass, 10, function(err, hash) { if (err) tools.error(err); 
@@ -69,43 +69,44 @@ con.connect((err) => { if (err) tools.error(err)
 // Ports
 server.listen(5050)
 
-app.get('/artists', (req,res) => {
+function mergelinks(artists, links){
+	for (i = 0; i < artists.length; i++) {
+		artists[i].links = new Array	
+		for (j = 0; j < links.length; j++) {
+			if (artists[i].id == links[j].artist_id) {
+				artists[i].links.push(links[j])
+			}
+		}
+	}
+	return (artists)
+}
 
-	con.query("SELECT * FROM artists", (err, response) => { if (err) tools.error(err);
-		console.log(response)
-		var data = response.forEach(el => {
-			con.query("SELECT * FROM links WHERE artist_id = ?", [el.id], 
-    			(err, links) => { if (err) tools.error(err);
-    			else 
-					el.links = links
-					//console.log(el.links)
-			}) 
+app.get('/artists', (req,res) => {
+	con.query("SELECT * FROM artists", (err, artists) => { if (err) tools.error(err);
+		con.query("SELECT * FROM links", (err, links) => { if (err) tools.error(err);
+			var data = mergelinks(artists, links)
+			res.json(JSON.stringify(tools.shuffle(data)))
 		})
-		data = tools.shuffle(response)
-		res.json(JSON.stringify(data)) // la liste de tout les artists a t'envoyer
 	})
 })
-
-app.get('/artist/:slug', (req,res) => {
+.get('/artist/:slug', (req,res) => {
 	var artist = eschtml(req.params.slug)
-    con.query("SELECT * FROM artists WHERE slug = ?", [artist], (err, response) => { if (err) tools.error(err);
-    	con.query("SELECT * FROM links WHERE artist_id = ?", [artist.id], 
+	   con.query("SELECT * FROM artists WHERE slug = ?", [artist], (err, response) => { if (err) tools.error(err);
+    	con.query("SELECT * FROM links WHERE artist_id = ?", [response[0].id], 
     		(err, links) => { if (err) tools.error(err);
 			else
 			{
-				console.log(links)
+				response[0].links = new Array
 				response[0].links = links
 				res.json(response[0])
 			}
     	})
 	})
 })
-
-app.get('/error/:data', (req,res)  => {
+.get('/error/:data', (req,res)  => {
     tools.error(req.params.data);
 })
-
-app.post('/login', (req,res)  => {
+.post('/login', (req,res)  => {
 	if (!empty(req.body) && !empty(req.body.username) && !empty(req.body.password))
 	{
 		username = eschtml(req.body.username)
@@ -150,14 +151,12 @@ app.post('/login', (req,res)  => {
 	else
 		res.json({error: 'Empty Field'})
 })
-
-app.post('/moonrise/delete', (req,res) => {
+.post('/moonrise/delete', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/delete_artist.js")+'')
 })
-app.post('/moonrise/create', (req,res) => {
+.post('/moonrise/create', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/create_artist.js")+'')
 })
-app.post('/moonrise/update', (req,res) => {
+.post('/moonrise/update', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
 })
-
