@@ -71,6 +71,7 @@ export default {
             if (this.getToken && this.getLoggedIn)
               this.$router.push('/admin')
           })
+          .catch(e => console.log(e))
       },
       ...mapActions({
         authenticateUser: 'auth/authenticateUser'

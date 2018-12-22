@@ -15,9 +15,6 @@ const jsonwebtoken = require('jsonwebtoken')
 const	app = express()
 const   server = http.createServer(app)
 
-
-
-
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -126,22 +123,14 @@ app.get('/artists', (req,res) => {
 				{
 					bcrypt.compare(password, user.password, (err, result) => {
 						if (result) {
-							const accessToken = jsonwebtoken.sign(
-								{
-								  username,
-								  picture: 'https://github.com/nuxt.png',
-								  name: 'User Nicholas',
-								  scope: ['test', 'user']
-								},
-								'dummy'
-							  )
+							const accessToken = jsonwebtoken.sign({ username }, 'dummy', { expiresIn: 60 * 60 * 24 })
 							  res.json({
 								token: {
 								  accessToken
 								}
 							})
 						} else {
-							res.json({error: `Wrong`}) // change for the hackers
+							res.json({error: `Wrong`}) 
 						}
 					})
 				}

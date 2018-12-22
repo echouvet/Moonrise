@@ -9,3 +9,7 @@ export const getLoggedIn = (state) => {
 export const getToken = (state) => {
     return state.token
 }
+
+export const getExpDate = (state) => {
+    return state.exp
+}
