@@ -3,7 +3,7 @@
     <mobile-nav/>
         <div class="flex flex-wrap mb-6">
             <side-nav/>
-            <section v-if="artist" id="artist-page" class="md:w-3/4 xl:w-5/6 md:mt-4 container mx-auto px-4">
+            <section v-if="artist" id="artist-page" class="lg:w-3/4 xl:w-5/6 md:mt-4 container mx-auto px-4">
               <img :src="artist.img2" class="max-h-half-screen">
               <div class="relative pb-8">
                 <div class="static bg-green">

@@ -3,7 +3,7 @@
     <mobile-nav/>
         <div class="flex flex-wrap mb-6">
             <side-nav/>
-            <section id="page-content" class="w-full md:w-3/4 xl:w-5/6  h-full px-4 mt-4">
+            <section id="page-content" class="w-full lg:w-3/4 xl:w-5/6  h-full px-2 mt-4">
               <app-form/>
             </section>
         </div>
