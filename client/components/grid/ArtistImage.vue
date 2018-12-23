@@ -1,10 +1,8 @@
 <template>
-    <nuxt-link :to="{ name: 'artist-slug', params: { slug: artist.slug }}" class="whitespace-no-wrap no-underline text-white capitalize">
+    <nuxt-link :to="{ name: 'artist-slug', params: { slug: artist.slug }}" class="whitespace-no-wrap no-underline text-grey-darkest font-bold uppercase">
         <img :src="artist.img1"  class="image w-full  pb-1">
         <div class="artist-overlay">
-            <div class="p-4 bg-moonrise">
                     {{ artist.name }}
-            </div>
         </div>
     </nuxt-link>
 </template>

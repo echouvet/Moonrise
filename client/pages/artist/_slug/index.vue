@@ -22,10 +22,11 @@
                   </div>
                 </div>
                   <div class="w-full md:w-1/3 lg:w-1/2 px-2 md:-ml-8">
-                    <div class="bg-moonrise w-64 p-2 leading-loose mt-4 md:mt-0 ml-2">
-                          <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Press Kit</a><br>
-                          <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Facebook</a><br>                                                
-                          <a href="#" class="no-underline text-grey-lightest font-semibold hover:text-white">Resident Advisor</a>    
+                    <div v-if="artist.links.length > 0" class="flex flex-col bg-moonrise w-64 p-2 leading-loose mt-4 md:mt-0 ml-2">
+                          <a v-for="(link, i) in artist.links" :key="i" 
+                             :href="link.placeholder" target="_blank" class="no-underline text-grey-lightest font-semibold hover:text-white">
+                             {{link.link}}
+                          </a>
                       </div>
                       <nuxt-link :to="{ name: 'booking' }"  class="no-underline text-white font-semibold">
                         <div class="bg-grey-darkest hover:bg-grey-darker w-64 p-2 leading-loose shadow-lg ml-2 cursor-pointer">

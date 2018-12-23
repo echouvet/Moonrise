@@ -7,7 +7,7 @@
           Link Name
         </label>
          <input type="text" placeholder="Link Name" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-               v-model="item.link_name" @input="updateValue()" name="link_name"/>
+               v-model="item.link" @input="updateValue()" name="link_name"/>
 
       </div>
       <div class="w-full md:w-1/2 px-3">
@@ -15,7 +15,7 @@
           Link
         </label>
         <input type="text" placeholder="Actual Link" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-               v-model="item.link" @input="updateValue()" name="link"/>
+               v-model="item.placeholder" @input="updateValue()" name="link"/>
          <a href="#" class="text-red no-underline" @click.prevent="deleteValue(index)">Remove</a>
       </div>
         <a href="#" class="text-grey-dark no-underline ml-3" @click.prevent="addValue()">Add link</a>
@@ -43,6 +43,19 @@
       this.values.push({});
       this.$emit('input', this.values);
     }    
+  },
+  computed: {
+    artistLinks() {
+      return this.links
+    }
+  },
+  watch: {
+    artistLinks(val) {
+      if (val && val.length > 0)
+        this.values = val
+      else
+        this.values = [{}]
+    }
   }
 }
 </script>

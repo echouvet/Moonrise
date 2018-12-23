@@ -101,10 +101,10 @@ export default {
 				edited: 0
 			}
 		},
-		mounted() {		
-			setTimeout(() => {
-				this.artists = this.getArtists
-			}, 3000)
+		watch: {
+			getArtists(val) {
+				this.artists = val
+			}
 		},
 		computed: {
 			...mapGetters({
@@ -187,8 +187,7 @@ export default {
 			checkForExpDate() {
 				let now = new Date() 
 				let exp = new Date(this.getExpDate)
-				console.log(now > exp)
-				if (now > exp) {
+				if (now >= exp) {
 					this.logUserOut()
 					this.$router.push('/login')
 				}
