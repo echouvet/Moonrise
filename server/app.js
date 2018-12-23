@@ -48,7 +48,7 @@ app.use(
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root42"
+    password: "123456"
 })
 con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
