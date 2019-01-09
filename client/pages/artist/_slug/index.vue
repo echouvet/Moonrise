@@ -9,7 +9,7 @@
                 <div class="static bg-green">
                     <div class="absolute pin-b pin-l bg-moonrise p-4 text-grey-light mx-8 leading-loose shadow-lg">
                       <h1 class="text-white text-sm md:text-lg capitalize">{{ artist.name }}</h1>
-                      <p class="text-grey-lightest text-xs md:text-base">Mule Musiq / Innervision / Running Back</p>
+                      <p class="text-grey-lightest text-xs md:text-base">{{ artist.labels }}</p>
                       <p class="text-grey-lightest text-xs md:text-base">Location: {{ artist.location }}</p>
                       <p class="text-grey-lightest text-xs md:text-base">Booking: {{ artist.territory }}</p>
                     </div>

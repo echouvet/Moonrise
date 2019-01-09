@@ -89,15 +89,20 @@ app.get('/artists', (req,res) => {
 .get('/artist/:slug', (req,res) => {
 	var artist = eschtml(req.params.slug)
 	   con.query("SELECT * FROM artists WHERE slug = ?", [artist], (err, response) => { if (err) tools.error(err);
-    	con.query("SELECT * FROM links WHERE artist_id = ?", [response[0].id], 
+		if (response.length  !== 0)
+		{
+			con.query("SELECT * FROM links WHERE artist_id = ?", [response[0].id], 
     		(err, links) => { if (err) tools.error(err);
-			else
-			{
-				response[0].links = new Array
-				response[0].links = links
-				res.json(response[0])
-			}
-    	})
+				else
+				{
+					response[0].links = new Array
+					response[0].links = links
+					res.json(response[0])
+				}
+    		})
+		}
+		else
+			res.json({error: 1})
 	})
 })
 .get('/error/:data', (req,res)  => {

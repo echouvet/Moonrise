@@ -7,6 +7,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 	    description = eschtml(field.description)
 	    location = eschtml(field.location)
 		territory = eschtml(field.territory)
+		labels = eschtml(field.labels)
 		
 		//Errors
 		if (empty(files.img1))
@@ -23,20 +24,22 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 			res.json({error : "Missing Description" })
 		else if (empty(location))
 			res.json({error : "Missing Location" })
+		else if (empty(labels))
+			res.json({error : "Missing Labels" })
 		else if (empty(territory))
 			res.json({error : "Missing Territory" })
 		else if (empty(field.links))
 			res.json({error : "No Links" })
-		else if (name.length > 250 || location.length > 250 || territory.length > 250)
-			res.json({error : "Name, Location, or Territory are over 250 characters :(" })
+		else if (name.length > 250 || location.length > 250 || territory.length > 250 || labels.length > 250)
+			res.json({error : "Name, Location, Labels, or Territory are over 250 characters :(" })
 		else if (description.length > 65500)
 			res.json({error : "Your Description is over 65,500 CHARACTERSSSSS wtf Nico xD message Eloi if you really want this" })
 		else
 		{
 
 			const slug = tools.slugify(name)
-		    var sql = 'INSERT INTO `artists` (`name`, `slug`, `description`, `location`, `territory`) VALUES (?, ?, ?, ?, ?)';
-		    con.query(sql, [name, slug, description, location, territory], 
+		    var sql = 'INSERT INTO `artists` (`name`, `slug`, `description`, `location`, `territory`, `labels`) VALUES (?, ?, ?, ?, ?, ?)';
+		    con.query(sql, [name, slug, description, location, territory, labels], 
 		    	(err, result) => { if (err) tools.error(err); 
 				var dir =  __dirname.replace("/server", "") + '/client/static/img/' + result.insertId
 				if (!fs.existsSync(dir)){

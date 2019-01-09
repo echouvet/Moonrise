@@ -1,6 +1,6 @@
 function update(column, change, id) {
-    if ((column == 'name' || column == 'location' || column == 'territory') && change.length > 250)
-        res.json({error : "Name, Location, or Territory can not be over 250 characters :(" })
+    if ((column == 'name' || column == 'location' || column == 'territory' || column == 'labels') && change.length > 250)
+        res.json({error : "Name, Location, Labels, or Territory can not be over 250 characters :(" })
     else {
         var sql = 'UPDATE artists SET ' + column + ' = ? WHERE id = ?'
         con.query(sql, [change, id], function (err) { if (err) tools.error(err); })
@@ -39,6 +39,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         name = eschtml(field.name)
         description = eschtml(field.description)
         location = eschtml(field.location)
+        labels = eschtml(field.labels)
         territory = eschtml(field.territory)
 
         // slugify function from tools how to import and use ?
@@ -62,6 +63,8 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         }
         if (!empty(location))
             update('location', location, id)
+        if (!empty(labels))
+            update('labels', labels, id)
         if (!empty(territory))
             update('territory', territory, id)
         if (!empty(field.links))

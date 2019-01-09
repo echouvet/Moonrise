@@ -6,6 +6,7 @@ name VARCHAR(255), \
 slug VARCHAR(255), \
 description TEXT, \
 location VARCHAR(255), \
+labels VARCHAR(255), \
 territory VARCHAR(255), \
 img1 VARCHAR(255), \
 img2 VARCHAR(255) )`;
