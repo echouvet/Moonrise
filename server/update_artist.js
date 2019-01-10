@@ -1,6 +1,6 @@
 function update(column, change, id) {
     if ((column == 'name' || column == 'location' || column == 'territory' || column == 'labels') && change.length > 250)
-        res.json({error : "Name, Location, Labels, or Territory can not be over 250 characters :(" })
+        error = "Name, Location, Labels, or Territory can not be over 250 characters :( "
     else {
         var sql = 'UPDATE artists SET ' + column + ' = ? WHERE id = ?'
         con.query(sql, [change, id], function (err) { if (err) tools.error(err); })
@@ -10,7 +10,7 @@ function update(column, change, id) {
 
 function updateimg(column, image, id) {
     if (image.size > 50000000)
-        res.json({error : "First image is too big"})
+        error = "First image is too big"
     else
     {
         con.query('SELECT '+ column +' FROM artists WHERE id = ?', [id], (err, img) => {
@@ -32,6 +32,7 @@ function updateimg(column, image, id) {
 
 var binary = 0;
 var form = new formidable.IncomingForm();
+var error = 'An Error Occured'
 form.parse(req, (err, field, files) => { if (err) tools.error(err);
     if (empty(field.id)) {res.json({error : "No Artist Selected"});}
     else{
@@ -41,6 +42,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         location = eschtml(field.location)
         labels = eschtml(field.labels)
         territory = eschtml(field.territory)
+        soundcloud = eschtml(field.soundcloud)
 
         // slugify function from tools how to import and use ?
         
@@ -49,6 +51,8 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
             updateimg('img1', files.img1, id)
         if (!empty(files.img2))
             updateimg('img2', files.img2, id)
+        if (!empty(soundcloud))
+            update('soundcloud', soundcloud, id)
         if (!empty(name)) {
             update('name', name, id)
             const slug = tools.slugify(name)
@@ -57,7 +61,7 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         if (!empty(description))
         {
             if (description.length > 65500)
-                res.json({error : "Your Description is over 65,500 CHARACTERSSSSS wtf Nico xD message Eloi if you really want this" })
+                error = "Your Description is over 65,500 CHARACTERSSSSS wtf Nico xD message Eloi if you really want this"
             else
                 update('description', description, id)
         }
@@ -84,6 +88,6 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
         if (binary = 1)
             res.json({success: true})
         else
-            res.json({error: 'Nothing Was Updated'})
+            res.json({error: error})
     }
 })

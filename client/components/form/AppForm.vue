@@ -35,7 +35,15 @@
         Labels
       </label>
       <input v-model="current_artist.labels" placeholder="Labels" name="Labels" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text">
-    </div>	
+    </div>
+	</div>
+	<div class="flex flex-wrap -mx-3 mb-6">
+	    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+	      <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
+	        Sound Cloud src
+	      </label>
+	      <input v-model="current_artist.soundcloud" placeholder="Sound Cloud src" name="Soundcloud" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text">
+	    </div>
 	</div>
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full px-3">
@@ -183,6 +191,7 @@ export default {
 				formData.append("location", this.current_artist.location)
 				formData.append("territory", this.current_artist.territory)
 				formData.append("labels", this.current_artist.labels)
+				formData.append("soundcloud", this.current_artist.soundcloud)
 				formData.append("links", this.links)
 				formData.append('img1', this.current_artist.img1)
 				formData.append('img2', this.current_artist.img2)

@@ -18,7 +18,7 @@
             <div class="flex flex-col text-center leading-loose  py-4 bg-grey-darkest shadow-lg">
                         <nuxt-link :to="{ name: 'about-moonrise-agency' }" class="text-white font-semibold  capitalize no-underline">About Moonrise</nuxt-link>
                         <nuxt-link :to="{ name: 'booking' }"  class="text-white font-semibold  capitalize no-underline">Booking</nuxt-link>
-
+                        <nuxt-link :to="{ name: 'labels' }"  class="text-white font-semibold  capitalize no-underline">Labels</nuxt-link>
                         <a v-if="isloggedIn" class="text-white cursor-pointer font-semibold" @click="logout">Logout</a>
 
 

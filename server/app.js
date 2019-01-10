@@ -48,7 +48,7 @@ app.use(
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "123456"
+    password: "root42"
 })
 con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
@@ -79,7 +79,7 @@ function mergelinks(artists, links){
 }
 
 app.get('/artists', (req,res) => {
-	con.query("SELECT * FROM artists", (err, artists) => { if (err) tools.error(err);
+	con.query("SELECT * FROM artists ORDER BY name", (err, artists) => { if (err) tools.error(err);
 		con.query("SELECT * FROM links", (err, links) => { if (err) tools.error(err);
 			var data = mergelinks(artists, links)
 			res.json(JSON.stringify(tools.shuffle(data)))

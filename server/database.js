@@ -8,6 +8,7 @@ description TEXT, \
 location VARCHAR(255), \
 labels VARCHAR(255), \
 territory VARCHAR(255), \
+soundcloud TEXT, \
 img1 VARCHAR(255), \
 img2 VARCHAR(255) )`;
 con.query(artists, (err) => {  if (err) tools.error(err);}) 
@@ -25,5 +26,5 @@ username VARCHAR(255), \
 password VARCHAR(255))`;
 con.query(user, (err) => {  if (err) tools.error(err);}) 
 
-// eval(fs.readFileSync(__dirname + "/seed.js")+'')
+//eval(fs.readFileSync(__dirname + "/seed.js")+'')
 
