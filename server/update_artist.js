@@ -15,11 +15,15 @@ function updateimg(column, image, id) {
     {
         con.query('SELECT '+ column +' FROM artists WHERE id = ?', [id], (err, img) => {
              var oldpath = __dirname.replace("/server", "") +'/client/static' + img[0][column]
-             if (!fs.existsSync(oldpath)){
+             if (fs.existsSync(oldpath)){
                 fs.unlinkSync(oldpath);
              }
         })
-        var path =  __dirname.replace("/server", "") +'/client/static/img/'+id+'/'+image.name; 
+        var dir =  __dirname.replace("/server", "") + '/client/static/img/' + id
+        if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+        }
+        var path = dir +'/' + image.name; 
         fs.readFile(image.path, (err, data) => { if (err) tools.error(err);
             fs.writeFile(path, data, (err) => { if (err) tools.error(err); })
         })
