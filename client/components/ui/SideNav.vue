@@ -5,7 +5,6 @@
                     <img class="w-full" src="~/static/img/moon-full-rise.png" alt="moon-full-rise">
                 </nuxt-link>
                 <div class="text-center">
-                    <nuxt-link :to="{ name: 'index' }" class="whitespace-no-wrap text-grey-darkest uppercase font-semibold no-underline">Moonrise Agency</nuxt-link>
                 </div>
                 <div class="mt-2 leading-loose tracking-wide text-center">  
                     <div class="flex flex-col items-center bg-moonrise p-2 w-full ">
@@ -16,7 +15,7 @@
            
 
             <div class="flex flex-col text-center leading-loose  py-4 bg-grey-darkest shadow-lg">
-                        <nuxt-link :to="{ name: 'about-moonrise-agency' }" class="text-white font-semibold  capitalize no-underline">About Moonrise</nuxt-link>
+                        <nuxt-link :to="{ name: 'about-moonrise-agency' }" class="text-white font-semibold  capitalize no-underline">About</nuxt-link>
                         <nuxt-link :to="{ name: 'booking' }"  class="text-white font-semibold  capitalize no-underline">Booking</nuxt-link>
                         <a v-if="isloggedIn" class="text-white cursor-pointer font-semibold" @click="logout">Logout</a>
 

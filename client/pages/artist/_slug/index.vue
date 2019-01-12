@@ -8,17 +8,17 @@
               <div class="relative pb-8">
                 <div class="static bg-green">
                     <div class="absolute pin-b pin-l bg-moonrise p-4 text-grey-light mx-8 leading-loose shadow-lg">
-                      <h1 class="text-white text-sm md:text-lg capitalize">{{ artist.name }}</h1>
-                      <p style="font-size: .8rem;" class="text-grey">{{ artist.labels }}</p>
-                      <p style="font-size: .8rem;" class="text-grey">{{ artist.location }}</p>
-                      <p style="font-size: .8rem;" class="text-grey">Booking {{ artist.territory }}</p>
+                      <h1 class="text-white text-sm md:text-lg capitalize">{{ this.undohtml(artist.name) }}</h1>
+                      <p class="text-sm text-grey">{{ this.undohtml(artist.labels) }}</p>
+                      <p class="text-sm text-grey">{{ this.undohtml(artist.location) }}</p>
+                      <p  class="text-sm text-grey">Booking : {{ this.undohtml(artist.territory) }}</p>
                     </div>
                 </div>
               </div>
               <div class="px-">
               <div class="flex flex-wrap -mx-2">
                 <div class="w-full md:w-2/3 lg:w-1/2 px-2 mt-4">
-                  <div  class="tracking-wide text-grey-darker mt-4 text-sm leading-normal px-2 md:w-5/6" style="white-space: pre-line;"  v-html="artist.description">
+                  <div  class="tracking-wide text-grey-darker mt-4 text-sm leading-normal px-2 md:w-5/6" style="white-space: pre-line;" v-html="this.undohtml(artist.description)">
                   </div>
                 </div>
                  <div class="w-full md:w-1/3 lg:w-1/2 px-2 md:-ml-8">
@@ -56,14 +56,14 @@ export default {
     SideNav,
   },
  head() {
-      return { title: this.artist.name }
-  },
+     return { title: this.artist.name }
+ },
   data () {
     return {
       artist: null,
     }
   },
-  async validate({ params }) {
+async validate({ params }) {
     const {data} = await axios.get(`//moonrise-agency.com/api/artist/${params.slug}`)
     if (data.slug === params.slug)
       return true
@@ -76,8 +76,29 @@ export default {
             artist: res.data
           }
         })
+	.catch(e => console.log(e))
   },
-  
+  methods: {
+      undohtml(text) {
+	if (text) {
+        var map = {
+            '&amp;': '&',
+            '&#038;': "&",
+            '&lt;': '<',
+            '&gt;': '>',
+            '&quot;': '"',
+            '&#039;': "'",
+            '&#8217;': "’",
+            '&#8216;': "‘",
+            '&#8211;': "–",
+            '&#8212;': "—",
+            '&#8230;': "…",
+            '&#8221;': '”'
+      }
+      return text.replace(/\&[\w\d\#]{2,5}\;/g, function(m) { return map[m]; });
+	}
+    }, 
+  }
 }
 </script>
 

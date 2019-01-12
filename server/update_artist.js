@@ -9,7 +9,7 @@ function update(column, change, id) {
 }
 
 function updateimg(column, image, id) {
-    if (image.size > 50000000)
+    if (image.size > 5000000000)
         error = "First image is too big"
     else
     {

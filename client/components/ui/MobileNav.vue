@@ -14,12 +14,11 @@
             <div class="bg-moonrise animated fadeInUp fixed pin-b pin-x align-top m-auto justify-center w-full h-full flex flex-col">
                 <div class="leading-loose tracking-wide text-center">  
                     <div class="flex flex-col items-center w-full ">
-                        <nuxt-link :to="{ name: 'index' }" class="whitespace-no-wrap text-grey hover:text-white uppercase font-semibold no-underline pb-4">Moonrise Agency</nuxt-link>
                         <nuxt-link v-for="artist in getArtists" :key="artist.id" :to="{ name: 'artist-slug', params: { slug: artist.slug }}" class="text-white hover:text-grey capitalize  no-underline">{{ artist.name }}</nuxt-link><br>
                     </div>
                 </div>
                    <div class="flex flex-col text-center leading-loose">
-                        <nuxt-link :to="{ name: 'about-moonrise-agency' }" class="text-white capitalize no-underline hover:text-grey">About Moonrise</nuxt-link>
+                        <nuxt-link :to="{ name: 'about-moonrise-agency' }" class="text-white capitalize no-underline hover:text-grey">About</nuxt-link>
                         <nuxt-link :to="{ name: 'booking' }"  class="text-white capitalize no-underline hover:text-grey">Booking</nuxt-link>
 
                          <a v-if="isLoggedIn" class="text-white cursor-pointer hover:text-grey" @click="logout">Logout</a>

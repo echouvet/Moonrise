@@ -13,11 +13,11 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 		//Errors
 		if (empty(files.img1))
 			res.json({error : "Missing First Image"})
-		else if (files.img1.size > 50000000)
+		else if (files.img1.size > 5000000000)
 			res.json({error : "First image is too big"})
 		else if (empty(files.img2))
 			res.json({error : "Missing second Image"})
-		else if (files.img2.size > 50000000)
+		else if (files.img2.size > 5000000000)
 			res.json({error : "Second image is too big"})
 		else if (empty(name))
 			res.json({error : "Missing Name" })
