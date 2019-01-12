@@ -32,4 +32,8 @@ async function start() {
     badge: true
   })
 }
+app.use((req, res, next) => {
+	console.log('url' + req.url) 
+	next()
+})
 start()

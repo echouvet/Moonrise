@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const initArtistsState = async (context) => {
-    const { data } = await axios.get('http://localhost:5050/artists')
+    const { data } = await axios.get('//moonrise-agency.com/api/artists')
     if (data) {
         const artists = JSON.parse(data)
         setArtists(context, artists)

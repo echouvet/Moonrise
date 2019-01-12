@@ -28,7 +28,7 @@ export const logUserOut = ({commit}) => {
 }
 
 export const authenticateUser = ({commit}, user) => {
-    return axios.post('http://localhost:5050/login', {
+    return axios.post('//moonrise-agency.com/api/login', {
           username: user.username,
           password: user.password,
           returnSecureToken: true

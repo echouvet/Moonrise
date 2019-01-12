@@ -1,0 +1,4 @@
+#!/bin/sh
+cd server
+env PORT=5050 /usr/bin/node app.js
+

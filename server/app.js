@@ -21,28 +21,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors('*'))
 app.use(
 	jwt({
-	  secret: 'dummy'
+	  secret: '0evuaIpzxZDOwSB4x61fEzfT8LA162ABBkUeUtGvT7Qp8TN1W1o6UEG+vy49Av'
 	}).unless({
 	  path: [
 		{
-			url: '/artists',
+			url: '/api/artists',
 			methods: ['GET']
 		},
 		{
-			url: /^\/artist\/.*/,
+			url: /^\/api\/artist\/.*/,
 			methods: ['GET']
 		},
 		{
-			url: '/login',
+			url: '/api/login',
 			methods: ['GET', 'POST']
 		},
 		{
-			url: /^\/error\/.*/,
+			url: /^\/api\/error\/.*/,
 			methods: ['GET']
 		},
 	   ]
 	})
   )
+
 
 
 var con = mysql.createConnection({
@@ -78,7 +79,7 @@ function mergelinks(artists, links){
 	return (artists)
 }
 
-app.get('/artists', (req,res) => {
+app.get('/api/artists', (req,res) => {
 	con.query("SELECT * FROM artists ORDER BY name", (err, artists) => { if (err) tools.error(err);
 		con.query("SELECT * FROM links", (err, links) => { if (err) tools.error(err);
 			var data = mergelinks(artists, links)
@@ -86,7 +87,7 @@ app.get('/artists', (req,res) => {
 		})
 	})
 })
-.get('/artist/:slug', (req,res) => {
+.get('/api/artist/:slug', (req,res) => {
 	var artist = eschtml(req.params.slug)
 	   con.query("SELECT * FROM artists WHERE slug = ?", [artist], (err, response) => { if (err) tools.error(err);
 		if (response.length  !== 0)
@@ -105,10 +106,10 @@ app.get('/artists', (req,res) => {
 			res.json({error: 1})
 	})
 })
-.get('/error/:data', (req,res)  => {
+.get('/api/error/:data', (req,res)  => {
     tools.error(req.params.data);
 })
-.post('/login', (req,res)  => {
+.post('/api/login', (req,res)  => {
 	if (!empty(req.body) && !empty(req.body.username) && !empty(req.body.password))
 	{
 		username = eschtml(req.body.username)
@@ -128,7 +129,7 @@ app.get('/artists', (req,res) => {
 				{
 					bcrypt.compare(password, user.password, (err, result) => {
 						if (result) {
-							const accessToken = jsonwebtoken.sign({ username }, 'dummy', { expiresIn: 60 * 60 * 24 })
+							const accessToken = jsonwebtoken.sign({ username }, '0evuaIpzxZDOwSB4x61fEzfT8LA162ABBkUeUtGvT7Qp8TN1W1o6UEG+vy49Av', { expiresIn: 60 * 60 * 24 })
 							  res.json({
 								token: {
 								  accessToken
@@ -145,12 +146,12 @@ app.get('/artists', (req,res) => {
 	else
 		res.json({error: 'Empty Field'})
 })
-.post('/moonrise/delete', (req,res) => {
+.post('/api/moonrise/delete', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/delete_artist.js")+'')
 })
-.post('/moonrise/create', (req,res) => {
+.post('/api/moonrise/create', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/create_artist.js")+'')
 })
-.post('/moonrise/update', (req,res) => {
+.post('/api/moonrise/update', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
 })

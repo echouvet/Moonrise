@@ -18,7 +18,7 @@
               <div class="px-">
               <div class="flex flex-wrap -mx-2">
                 <div class="w-full md:w-2/3 lg:w-1/2 px-2 mt-4">
-                  <div class="tracking-wide text-grey-darker mt-4 leading-normal px-2 md:w-5/6" style="white-space: pre-line;"  v-html="artist.description">
+                  <div  class="tracking-wide text-grey-darker mt-4 text-sm leading-normal px-2 md:w-5/6" style="white-space: pre-line;"  v-html="artist.description">
                   </div>
                 </div>
                  <div class="w-full md:w-1/3 lg:w-1/2 px-2 md:-ml-8">
@@ -64,13 +64,13 @@ export default {
     }
   },
   async validate({ params }) {
-    const {data} = await axios.get(`http://localhost:5050/artist/${params.slug}`)
+    const {data} = await axios.get(`//moonrise-agency.com/api/artist/${params.slug}`)
     if (data.slug === params.slug)
       return true
    return false // will stop Nuxt.js to render the route and display the error page
   },
   asyncData ({ params }) {
-    return axios.get(`http://localhost:5050/artist/${params.slug}`)
+    return axios.get(`//moonrise-agency.com/api/artist/${params.slug}`)
         .then((res) => {
           return {
             artist: res.data

@@ -138,18 +138,18 @@ export default {
 				const formData = new FormData()
 				if (this.button == 'new') {
 					const formData = this.appendall()
-					this.postrequest("http://localhost:5050/moonrise/create", formData)
+					this.postrequest("//moonrise-agency.com/api/moonrise/create", formData)
 				}
 				else if (this.button == 'update') {
 					const formData = this.appendall()
-					this.postrequest("http://localhost:5050/moonrise/update", formData)
+					this.postrequest("//moonrise-agency.com/api/moonrise/update", formData)
 				}
 				else if (this.button == 'del')
 				{
 					const formData = new FormData()
 					formData.append("id", this.current_artist.id)
 					console.log(this.current_artist.id)
-					this.postrequest("http://localhost:5050/moonrise/delete", formData)
+					this.postrequest("//moonrise-agency.com/api/moonrise/delete", formData)
 				}
 				
 			},
