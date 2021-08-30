@@ -5,7 +5,7 @@ form.parse(req, (err, field) => { if (err) tools.error(err);
 		if (empty(field.id))
 			res.json({error : "No Artist Selected"})
 		else {
-			id = eschtml(field.id)
+			id = field.id
 			con.query("SELECT * FROM artists WHERE id = ?", [id], (err, rows) => { if (err) tools.error(err); 
 				if (empty(rows[0]))
 					res.json({error : "Artist doesn't exist"})

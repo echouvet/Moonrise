@@ -7,7 +7,6 @@ const   bodyParser = require('body-parser')
 const   formidable = require('formidable')
 const 	cors = require('cors')
 const	tools = require("./tools.js")
-const	eschtml = require("escape-html")
 const	empty = require("is-empty")
 const 	bcrypt = require('bcrypt') 
 const jwt = require('express-jwt')
@@ -48,16 +47,16 @@ app.use(
 
 var con = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "root42"
+    user: "monty",
+    password: "some_pass"
 })
 con.connect((err) => { if (err) tools.error(err)
     eval(fs.readFileSync(__dirname + "/database.js")+'')
 })
 
 
-	// var pass = "admin"
-	// var login = "admin"
+	// var login = "root"
+	// var pass = "root42"
 	// bcrypt.hash(pass, 10, function(err, hash) { if (err) tools.error(err); 
 	// 	sql = 'INSERT INTO `user` (`username`, `password`) VALUES (?, ?)'
 	// 	con.query(sql, [login, hash], (err) => {if (err) tools.error(err);})
@@ -88,7 +87,7 @@ app.get('/api/artists', (req,res) => {
 	})
 })
 .get('/api/artist/:slug', (req,res) => {
-	var artist = eschtml(req.params.slug)
+	var artist = req.params.slug
 	   con.query("SELECT * FROM artists WHERE slug = ?", [artist], (err, response) => { if (err) tools.error(err);
 		if (response.length  !== 0)
 		{
@@ -112,8 +111,8 @@ app.get('/api/artists', (req,res) => {
 .post('/api/login', (req,res)  => {
 	if (!empty(req.body) && !empty(req.body.username) && !empty(req.body.password))
 	{
-		username = eschtml(req.body.username)
-		password = eschtml(req.body.password)
+		username = req.body.username
+		password = req.body.password
 		con.query('SELECT * FROM user', (err, users) => { if (err) tools.error(err);
 			if (users.length === 0)
 			{
@@ -155,3 +154,5 @@ app.get('/api/artists', (req,res) => {
 .post('/api/moonrise/update', (req,res) => {
 	eval(fs.readFileSync(__dirname + "/update_artist.js")+'')
 })
+
+console.log("running");

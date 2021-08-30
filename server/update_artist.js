@@ -40,13 +40,13 @@ var error = 'An Error Occured'
 form.parse(req, (err, field, files) => { if (err) tools.error(err);
     if (empty(field.id)) {res.json({error : "No Artist Selected"});}
     else{
-        var id = eschtml(field.id)
-        name = eschtml(field.name)
-        description = eschtml(field.description)
-        location = eschtml(field.location)
-        labels = eschtml(field.labels)
-        territory = eschtml(field.territory)
-        soundcloud = eschtml(field.soundcloud)
+        var id = field.id
+        name = field.name
+        description = field.description
+        location = field.location
+        labels = field.labels
+        territory = field.territory
+        soundcloud = field.soundcloud
 
         // slugify function from tools how to import and use ?
         
@@ -82,8 +82,8 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
             links.forEach((el) => {
                 if (!empty(el))
                 {
-                    var link_name = eschtml(el.link)
-                    var link = eschtml(el.placeholder)
+                    var link_name = el.link
+                    var link = el.placeholder
                     con.query('INSERT INTO `links` (`artist_id`, `link`, `placeholder`) VALUES (?, ?, ?)', 
                         [id, link_name, link], (err) => { if (err) tools.error(err); })
                 }

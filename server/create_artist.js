@@ -3,13 +3,13 @@ var form = new formidable.IncomingForm();
 form.parse(req, (err, field, files) => { if (err) tools.error(err);
 	else {
 		// Security
-		var	name = eschtml(field.name)
-	    description = eschtml(field.description)
-	    location = eschtml(field.location)
-		territory = eschtml(field.territory)
-		labels = eschtml(field.labels)
-		soundcloud = eschtml(field.soundcloud)
-		
+		var	name = field.name
+	    description = field.description
+	    location = field.location
+		territory = field.territory
+		labels = field.labels
+		soundcloud = field.soundcloud
+
 		//Errors
 		if (empty(files.img1))
 			res.json({error : "Missing First Image"})
@@ -50,8 +50,8 @@ form.parse(req, (err, field, files) => { if (err) tools.error(err);
 	        	}
 	        	var links = JSON.parse(field.links)
 	        	links.forEach((el) => {
-					var link_name = eschtml(el.link)
-					var link = eschtml(el.placeholder)
+					var link_name = el.link
+					var link = el.placeholder
 					con.query('INSERT INTO `links` (`artist_id`, `link`, `placeholder`) VALUES (?, ?, ?)', [result.insertId, link_name, link], 
 						(err) => { if (err) tools.error(err); })
 				})

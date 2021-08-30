@@ -1,9 +1,8 @@
 const  mailer = require("nodemailer")
-const	eschtml = require("escape-html")
 //https://nodemailer.com/about/
 module.exports = {
 	error: (msg) => {
-		var message = eschtml(msg)
+		var message = msg
 		console.log(message)
 		return ;
 		mailer.createTestAccount((err, account) => {
