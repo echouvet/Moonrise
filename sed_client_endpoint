@@ -1,6 +1,6 @@
 #!/bin/sh
 sed -i 's/localhot:5050/moonrise-agency.com/g' \
-    store/artists/actions.js \
-    store/auth/actions.js \
-    components/form/AppForm.vue \
-    pages/artist/_slug/index.vue
+    client/store/artists/actions.js \
+    client/store/auth/actions.js \
+    client/components/form/AppForm.vue \
+    client/pages/artist/_slug/index.vue
