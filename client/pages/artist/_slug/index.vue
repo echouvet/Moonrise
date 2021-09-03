@@ -59,7 +59,7 @@ export default {
      return { title: this.artist.name }
  },
   asyncData ({ params }) {
-    return axios.get(`http://localhost:5050/api/artist/${params.slug}`)
+    return axios.get(`//localhost:5050/api/artist/${params.slug}`)
         .then((res) => {
           return {
             artist: res.data
