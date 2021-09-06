@@ -69,7 +69,7 @@
                     <span class="ml-2">Image 1</span>
                 </button>
                 <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" v-on:change="handleimg1()"  ref="img1" name="img1" accept="image/*">
-                <!-- <img :src="'../..' + current_artist.img1" style="width: 500px"/> -->
+                <img id="preview-img1" style="width: 500px"/>
             </div>
 		</div>
 		<div class="w-full md:w-1/2 px-3">
@@ -82,7 +82,7 @@
                     <span class="ml-2">Image 2</span>
                 </button>
                 <input class="cursor-pointer absolute block opacity-0 pin-r pin-t" type="file" v-on:change="handleimg2()"  ref="img2" name="img2" accept="image/*">
-                <!-- <img :src="current_artist.img1" style="width: 500px"/> -->
+                <img id="preview-img2" style="width: 500px"/>
             </div>
 		</div>
 		<div class="flex justify-between mt-6 w-full px-3">
@@ -99,6 +99,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import MultipleInput from './MultipleInput.vue'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -127,12 +128,23 @@ export default {
 				getExpDate: 'auth/getExpDate'
 			})
 		},
+        mounted () {
+            axios.get("//localhost:5050/api/artists").then((artists) => {
+                this.artists = JSON.parse(artists.data);
+            });
+        },
 		methods: {
 			...mapActions({
 				logUserOut: 'auth/logUserOut'
 			}),
 			setArtist(id) {
 				this.current_artist = this.artists.find(el => {return (el.id === id)})
+
+                const preview1 = document.getElementById("preview-img1");
+                preview1.src = this.current_artist.img1;
+
+                const preview2 = document.getElementById("preview-img2");
+                preview2.src = this.current_artist.img2;
 			},
 			postForm() {
 				const formData = new FormData()
@@ -157,10 +169,28 @@ export default {
 				this.links = JSON.stringify(linksdata)
 			},
 			handleimg1(){
-    			this.current_artist.img1 = this.$refs.img1.files[0]
+                this.current_artist.img1 = this.$refs.img1.files[0];
+                const reader = new FileReader();
+                const preview = document.getElementById("preview-img1");
+
+                reader.addEventListener("load", function () {
+                        // convert image file to base64 string
+                        preview.src = reader.result;
+                    }, false);
+
+                reader.readAsDataURL(this.current_artist.img1);
   			},
   			handleimg2(){
-    			this.current_artist.img2 = this.$refs.img2.files[0]
+                this.current_artist.img2 = this.$refs.img2.files[0];
+                const reader = new FileReader();
+                const preview = document.getElementById("preview-img2");
+
+                reader.addEventListener("load", function () {
+                        // convert image file to base64 string
+                        preview.src = reader.result;
+                    }, false);
+
+                reader.readAsDataURL(this.current_artist.img2);
   			},
   			postrequest(url, data) {
 				if (this.checkForExpDate()) {
