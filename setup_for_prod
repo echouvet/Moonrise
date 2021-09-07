@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if ! [[ -f ".env" ]]; then
+    echo "error: '.env' file not found: Create a '.env' file in the same directory as this script" \
+        "with 'MYSQL_PASSWORD' var defined inside."
+    exit 1
+fi
+
+set -a
+source .env
+
+if [[ -z "${MYSQL_PASSWORD}" ]]; then
+    echo "error: 'MYSQL_PASSWORD' var undefined: Define 'MYSQL_PASSWORD' in the '.env' file located" \
+        "in the same directory as this script."
+    exit 1
+fi
+
+sed -i 's/localhost:5050/moonrise-agency.com/g' \
+    'client/store/artists/actions.js' \
+    'client/store/auth/actions.js' \
+    'client/components/form/AppForm.vue' \
+    'client/pages/artist/_slug/index.vue'
+
+sed -i "s/MYSQL-PASSWORD/${MYSQL_PASSWORD}/g" 'server/app.js'
