@@ -28,11 +28,11 @@
                              {{link.link}}
                           </a>
                       </div>
-                      <nuxt-link :to="{ name: 'booking' }"  class="no-underline text-white font-semibold">
-                        <div class="bg-grey-darkest hover:bg-grey-darker w-64 p-2 leading-loose shadow-lg ml-2 cursor-pointer">
-                            Booking Request
-                        </div>
-                      </nuxt-link>
+                      <!-- <nuxt-link :to="{ name: 'booking' }"  class="no-underline text-white font-semibold"> -->
+                      <!--   <div class="bg-grey-darkest hover:bg-grey-darker w-64 p-2 leading-loose shadow-lg ml-2 cursor-pointer"> -->
+                      <!--       Booking Request -->
+                      <!--   </div> -->
+                      <!-- </nuxt-link> -->
                        <div style="margin-top: 35px">
                         <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" :src="artist.soundcloud"></iframe>
                       </div>

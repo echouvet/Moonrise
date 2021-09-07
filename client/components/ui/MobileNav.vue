@@ -19,7 +19,7 @@
                 </div>
                    <div class="flex flex-col text-center leading-loose">
                         <nuxt-link :to="{ name: 'about-moonrise-agency' }" class="text-white capitalize no-underline hover:text-grey">About</nuxt-link>
-                        <nuxt-link :to="{ name: 'booking' }"  class="text-white capitalize no-underline hover:text-grey">Booking</nuxt-link>
+                        <!-- <nuxt-link :to="{ name: 'booking' }"  class="text-white capitalize no-underline hover:text-grey">Booking</nuxt-link> -->
 
                          <a v-if="isLoggedIn" class="text-white cursor-pointer hover:text-grey" @click="logout">Logout</a>
 
