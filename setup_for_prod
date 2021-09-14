@@ -15,7 +15,13 @@ if [[ -z "${MYSQL_PASSWORD}" ]]; then
     exit 1
 fi
 
-sed -i 's/localhost:5050/moonrise-agency.com/g' \
+if [[ -z "${DOMAIN}" ]]; then
+    echo "error: 'DOMAIN' var undefined: Define 'DOMAIN' in the '.env' file located" \
+        "in the same directory as this script."
+    exit 1
+fi
+
+sed -i "s/localhost:5050/${DOMAIN}/g" \
     'client/store/artists/actions.js' \
     'client/store/auth/actions.js' \
     'client/components/form/AppForm.vue' \
