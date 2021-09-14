@@ -21,6 +21,8 @@ if [[ -z "${DOMAIN}" ]]; then
     exit 1
 fi
 
+echo configuring ${DOMAIN}...
+
 sed -i "s/localhost:5050/${DOMAIN}/g" \
     'client/store/artists/actions.js' \
     'client/store/auth/actions.js' \
@@ -28,3 +30,6 @@ sed -i "s/localhost:5050/${DOMAIN}/g" \
     'client/pages/artist/_slug/index.vue'
 
 sed -i "s/MYSQL-PASSWORD/${MYSQL_PASSWORD}/g" 'server/app.js'
+
+cd client
+npm run build
